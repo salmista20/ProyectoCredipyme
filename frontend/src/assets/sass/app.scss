@@ -1,0 +1,668 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import "@/assets/sass/base/base";
+
+
+$color-alto: $azul-oscuro;
+$color-medio: #89bd29;
+$color-bajo: $verde-claro;
+
+$main-1: $verde-oscuro;
+$main-2: $plomo-oscuro;
+
+
+body {
+	position: fixed;
+	padding: 0;
+	margin: 0;
+
+	top: 0;
+	left: 0;
+
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+ 
+	background: url("@/assets/images/home/background.jpg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+a{
+   text-decoration:none
+}
+
+.mayus{
+    text-transform:uppercase;
+}
+
+
+.main-content{
+    margin-top:3% !important;
+}
+
+.card-body {
+	padding: 5px;
+	padding-right: 10px;
+	padding-left: 10px;
+	background-color: $color-bajo;
+}
+.card-header {
+	padding: 0.25rem;
+	padding-right: 0.35rem;
+	padding-left: 1.5rem;
+	margin-bottom: 0;
+	background-color: $plomo-oscuro !important;
+	color: white;
+	border-bottom: 1px solid #e3e6f0;
+}
+
+.card-title {
+	margin-bottom: 0.75rem;
+	text-transform: uppercase;
+	font-size: $tamañoLetraLabels;
+}
+.card-title {
+	background-color:$color-alto;
+	color: white;
+	height: -webkit-fit-content;
+	height: -moz-fit-content;
+	height: fit-content;
+	margin: 0;
+	text-align: center;
+	font-weight: bold;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+/* ----------------------------------- */
+
+/* PRIME DATATABLE */
+
+.p-datatable{
+	font-family: inherit;
+	}
+	
+	
+	.p-datatable .p-datatable-thead > tr > th {
+		padding: 5px !important;
+		font-size: 11px !important;
+		font-weight: bolder;
+		cursor: pointer !important;
+		background-color: $color-alto !important;
+		color: white !important;
+		justify-content: center !important;
+	
+		& .p-link{
+				color:white;
+		}
+	}
+	
+	.p-datatable .p-datatable-tbody > tr > td {
+		padding: 4px !important;
+		font-size: $tamañoLetraTable !important;
+		cursor: pointer !important;
+	}
+	
+	.p-datatable .p-datatable-tbody > tr:focus{
+	outline: 0.15rem solid $color-medio;
+	}
+	
+	.p-paginator{
+		background-color: transparent;
+		padding: 0 !important;
+	
+		.p-paginator-current{
+			font-size: 14px;
+		}
+		.p-paginator-pages .p-paginator-page{
+			font-size: 12px;
+		}
+	}
+	
+	.p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
+		background: $color-alto !important;
+		border-color: $color-medio !important;
+		color:white !important;
+	}
+	
+	.p-link{
+		height: 30px !important;
+	}
+.p-paginator-current{
+	height: 30px !important;
+}
+
+	.p-link:focus{
+		box-shadow: 0 0 0 0.2rem $color-medio;
+			}
+	
+	.p-link:hover{
+		background-color: $color-medio !important;
+	}
+	
+	.p-column-filter-menu-button:hover{
+		background-color: $plomo-oscuro !important;
+	}
+	.p-column-filter-menu-button-open{
+		background-color:$color-alto !important;
+	}
+	
+	.p-datatable-header{
+	   padding: 5px !important;
+	   background-color: transparent !important;
+	   border: none !important;
+	}
+	
+	.align-right {
+		justify-content: flex-end;
+	}
+	.align-center {
+		justify-content: center;
+	}
+	.p-datatable th[class*="align-"] .p-column-header-content {
+		display: inline-flex;
+	}
+	.p-datatable-footer{
+		color:gray  !important;
+		font-weight: normal !important;
+		background-color: transparent !important;
+	   font-size: 14px;
+		padding: 4px !important;
+		border: none !important;
+	}
+	
+	table thead tr th input[type="checkbox"]
+	{
+		transform: scale(1.5);
+	}
+	
+	table tbody tr td input[type="checkbox"]
+	{
+		  transform: scale(1.5);
+	}
+	
+	.p-checkbox .p-checkbox-box.p-highlight{
+		border-color: $plomo-oscuro !important;
+		background-color: $plomo-oscuro !important;
+	}
+	
+	.p-datatable .p-datatable-tbody > tr.p-highlight{
+		background-color: $color-bajo;
+	}
+	
+	.p-radiobutton .p-radiobutton-box.p-highlight{
+		border-color: $color-alto !important;
+		background-color: $color-alto !important;
+	}
+	
+	.p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover{
+		border-color: $color-alto !important;
+		background: $color-alto !important;
+	
+	}
+	
+	.p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):not(.p-higlight):hover{
+		border-color: $color-alto !important;
+	
+	}
+	
+	.p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus {
+		box-shadow: 0 0 0 0.2rem $color-medio;
+	}
+	
+	.p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover{
+		border-color: $color-alto !important;
+	}
+	
+	
+	// ---------------------------------------
+	
+	/* PRIME TABVIEW */
+	
+	.p-tabview{
+		.p-tabview-nav{
+			background-color: transparent !important;
+	
+			li.p-highlight{
+				.p-tabview-nav-link{
+					padding: 6px;
+					color:white;
+					font-size:$tamañoLetraLabels;
+					background: $color-alto;
+					border:none !important;
+					box-shadow:none !important;
+				}
+			}
+	
+			li {
+				.p-tabview-nav-link{
+					padding: 6px;
+					font-size:$tamañoLetraLabels;
+					background: transparent;
+				}
+	
+			}
+	
+			.pi{
+				font-size: 12px;
+			}
+		}
+	
+		.p-tabview-panels{
+			padding: 5px;
+			background-color: transparent !important;
+		}
+	
+	}
+	
+	.modal-body{
+		background-color: transparent !important;
+	}
+	
+	// ---------------------------------------
+	
+	// Modal----------------------------------
+	
+	.modal {
+		position: absolute !important;
+		z-index: 10 !important;
+	
+	}
+	.modal-body {
+		padding: 5px;
+	}
+	.modal-footer {
+		padding: 2px;
+		border-top: 1px solid white;
+	}
+	
+	// ---------------------------------------
+    // ---------------------------------------
+
+.btn.rounded-circle {
+	width: 30px !important;
+	height: 30px !important;
+	padding: 2px !important;
+}
+
+// BTN-MAIN-1----------------------------------
+.btn-main-1 {
+	color: #fff !important;
+	background-color: $main-1 !important;
+	border-color: $main-1;
+	box-shadow: 0 10px 20px -10px $main-1;
+    padding: 0.3rem 0.5rem !important;
+    font-size: $tamañoLetraButton !important;
+	&:hover,
+	&:focus {
+		color: #fff !important;
+        background-color: $color-medio !important;
+		box-shadow: none;
+		border-color: $main-1;
+	}
+
+	&:active,
+	&.active {
+		background-color: $main-1;
+		border-top: 1px solid $main-1;
+	}
+
+	&.disabled,
+	&.btn[disabled],
+	&:disabled {
+		background-color: $main-1;
+		border-color: $main-1;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+	}
+
+	&.active {
+		&.focus,
+		&:focus,
+		&:hover {
+			color: #fff !important;
+			background-color: #2aebcb;
+			border-color: #2aebcb;
+		}
+	}
+
+	&.focus:active {
+		color: #fff !important;
+		background-color: #2aebcb;
+		border-color: #2aebcb;
+	}
+
+	&:active {
+		&:focus,
+		&:hover {
+			color: #fff !important;
+			background-color: #2aebcb;
+			border-color: #2aebcb;
+		}
+	}
+
+    &.btn-sm{
+        svg{
+            width:15px !important;
+            height:15px !important;
+        }
+    }
+}
+
+.open > .dropdown-toggle.btn-main-1 {
+	&.focus,
+	&:focus,
+	&:hover {
+		color: #fff !important;
+		background-color: #2aebcb;
+		border-color: #2aebcb;
+	}
+}
+
+.btn-main-1:not(:disabled):not(.disabled) {
+	&.active,
+	&:active {
+		color: #fff !important;
+		background-color: $main-1;
+		border-color: $main-1;
+	}
+}
+
+.show > .btn-main-1.dropdown-toggle {
+	color: #fff !important;
+	background-color: $main-1;
+	border-color: $main-1;
+}
+
+.btn-main-1 .caret {
+	border-top-color: #fff;
+}
+
+.btn-group.open .btn-main-1.dropdown-toggle {
+	background-color: #eaf1ff;
+}
+
+// --------------------------------------------
+
+// BTN-MAIN-2----------------------------------
+
+.btn-main-2 {
+	color: #fff !important;
+	background-color: $main-2 !important;
+	border-color: $main-2;
+	box-shadow: 0 10px 20px -10px $main-2;
+    padding: 0.3rem 0.5rem !important;
+    font-size: $tamañoLetraButton !important;
+	&:hover,
+	&:focus {
+		color: #fff !important;
+		background-color: $plomo-claro !important;
+		box-shadow: none;
+		border-color: $main-2;
+	}
+
+	&:active,
+	&.active {
+		background-color: $main-2;
+		border-top: 1px solid $main-2;
+	}
+
+	&.disabled,
+	&.btn[disabled],
+	&:disabled {
+		background-color: $main-2;
+		border-color: $main-2;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+	}
+
+	&.active {
+		&.focus,
+		&:focus,
+		&:hover {
+			color: #fff !important;
+			background-color: #2aebcb;
+			border-color: #2aebcb;
+		}
+	}
+
+	&.focus:active {
+		color: #fff !important;
+		background-color: #2aebcb;
+		border-color: #2aebcb;
+	}
+
+	&:active {
+		&:focus,
+		&:hover {
+			color: #fff !important;
+			background-color: #2aebcb;
+			border-color: #2aebcb;
+		}
+	}
+    &.btn-sm{
+        svg{
+            width:15px !important;
+            height:15px !important;
+        }
+    }
+}
+
+.open > .dropdown-toggle.btn-main-2 {
+	&.focus,
+	&:focus,
+	&:hover {
+		color: #fff !important;
+		background-color: #2aebcb;
+		border-color: #2aebcb;
+	}
+}
+
+.btn-main-2:not(:disabled):not(.disabled) {
+	&.active,
+	&:active {
+		color: #fff !important;
+		background-color: $main-2;
+		border-color: $main-2;
+	}
+}
+
+.show > .btn-main-2.dropdown-toggle {
+	color: #fff !important;
+	background-color: $main-2;
+	border-color: $main-2;
+}
+
+.btn-main-2 .caret {
+	border-top-color: #fff;
+}
+
+.btn-group.open .btn-main-2.dropdown-toggle {
+	background-color: #eaf1ff;
+}
+
+// --------------------------------------------
+
+// BUTTON  ---------------------------------------
+
+.btn {
+	color: #fff !important;
+	padding: 0.3rem 1rem ;
+    font-size: $tamañoLetraButton !important;
+
+    &.btn-sm{
+        svg{
+            width:15px !important;
+            height:15px !important;
+        }
+    }
+
+}
+
+// --------------------------------------------
+
+// --------------------------------------------
+
+// BUTTON SPLIT ICON-----------------------------
+
+.btn-icon-split {
+    padding: 0px 0px 0px 4px   !important;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon-split .icon {
+    /* background: rgba(0, 0, 0, 0.15); */
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+}
+
+.btn-icon-split .text {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+}
+
+.btn-icon-split.btn-sm .icon,
+.btn-group-sm > .btn-icon-split.btn .icon {
+    padding: 0.25rem 0.5rem;
+}
+
+.btn-icon-split.btn-sm .text,
+.btn-group-sm > .btn-icon-split.btn .text {
+    padding: 0.25rem 0.5rem;
+}
+
+.btn-icon-split.btn-lg .icon,
+.btn-group-lg > .btn-icon-split.btn .icon {
+    padding: 0.5rem 1rem;
+}
+
+.btn-icon-split.btn-lg .text,
+.btn-group-lg > .btn-icon-split.btn .text {
+    padding: 0.5rem 1rem;
+}
+
+// --------------------------------------------
+
+
+.form-group {
+	margin-bottom: 0px !important;
+}
+
+.form-select {
+	padding: 0.375rem 0.75rem 0.375rem 0.75rem !important;
+    font-size: $tamañoLetraInput;
+}
+.form-control {
+	padding: 0.375rem 1.5rem 0.375rem 0.75rem !important;
+    font-size: $tamañoLetraInput;
+}
+
+.input-group .input-group-text{
+    font-size: $tamañoLetraLabels;
+    height: 30px !important;
+
+    svg{
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
+
+input.form-control{
+    height: 30px !important;
+    font-family: 'Roboto-Regular';
+}
+.form-select{
+    height: 30px !important;
+    font-family: 'Roboto-Regular';
+
+    &.is-valid{
+        // background-position: right .75rem center,center right 2.25rem !important;
+        background-size: calc(.75em + .375rem) calc(.75em + .375rem) !important;
+    }
+
+}
+
+.label-title {
+    color: $plomo-oscuro !important;
+    font-family: 'Roboto-Medium';
+    font-size: $tamañoLetraLabels !important;
+    margin-left: 5px !important;
+    margin-bottom: 1px !important;
+}
+
+.row{
+    margin-right: 0px !important;
+}
+
+.row>*{
+    padding-right: 0px !important;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.center{
+    text-align: center;
+}
+
+.modal-xl{
+    --bs-modal-width:1200px !important;
+}
+
+.modal{
+    --bs-modal-margin:5px!important;
+}
+
+.form-control {
+    // font-family: "Nunito",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+
+    &:focus {
+        box-shadow: 0 0 0.5px 0.5px gray !important;
+        border-color: $color-alto !important;
+
+    }
+}
+.form-select {
+    // font-family: "Nunito",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+
+    &:focus {
+        box-shadow: 0 0 0.5px 0.5px gray !important;
+        border-color: $plomo-claro !important;
+
+    }
+}
+
+/* Para los elementos deshabilitados */
+
+input[type="text"][readonly],
+input[type="number"][readonly],
+input[type="datetime"][readonly],
+input[type="date"][readonly] {
+    background: white !important;
+    color: black !important;
+}
+
+input[type="text"][disabled],
+input[type="number"][disabled],
+input[type="datetime"][disabled],
+input[type="date"][disabled] {
+    background: #e8f0f4 !important;
+    color: black !important;
+}
+
+textarea[disabled],
+select[disabled] {
+    background: #e8f0f4 !important;
+    color: black !important;
+}
+
+/* ----------------------------------- */

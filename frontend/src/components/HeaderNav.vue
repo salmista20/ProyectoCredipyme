@@ -1,0 +1,59 @@
+<template>
+	<div class="card relative z-2">
+		<Menubar :model="items">
+			<template #start>
+				<img
+					alt="logo"
+					src="@/assets/images/general/logo-corto-azul.svg"
+					height="40"
+					class="mr-2"
+				/>
+			</template>
+			<template #end>
+				<router-link to="/login"
+					><Button
+						label="Cerrar sesión"
+						severity="info"
+						icon="pi pi-power-off"
+						size="small"
+						rounded
+				/></router-link>
+			</template>
+		</Menubar>
+	</div>
+</template>
+
+<script>
+import Menubar from "primevue/menubar";
+import Button from "primevue/button";
+export default {
+	components: {
+		Menubar,
+		Button,
+	},
+	data() {
+		return {
+			items: [
+				{
+					label: "Usuarios",
+					icon: "pi pi-fw pi-user",
+					items: [
+						{
+							label: "Gestión",
+							icon: "pi pi-users",
+							to: "/gestion",
+						},
+						{
+							label: "Permisos",
+							icon: "pi pi-check-circle",
+						},
+					],
+				},
+			],
+		};
+	},
+};
+</script>
+
+<style>
+</style>
