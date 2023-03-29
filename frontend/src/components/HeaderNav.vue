@@ -36,16 +36,30 @@ export default {
 			items: [
 				{
 					label: "Usuarios",
+
 					icon: "pi pi-fw pi-user",
 					items: [
 						{
 							label: "Gestión",
-							icon: "pi pi-users",
-							to: "/gestion",
+							to: "/usu/gestion",
 						},
 						{
 							label: "Permisos",
-							icon: "pi pi-check-circle",
+						},
+					],
+				},
+				{
+					label: "Mantenimiento",
+					icon: "pi pi-fw pi-cog",
+					items: [
+						{
+							label: "Usuarios",
+							items: [
+								{
+									label: "Cargos",
+									to: "/man/usu/cargos",
+								},
+							],
 						},
 					],
 				},

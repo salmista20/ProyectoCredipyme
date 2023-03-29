@@ -20,9 +20,14 @@ const router = createRouter({
       component: () => import("@/views/Home.vue"),
     },
     {
-      path: "/gestion",
+      path: "/usu/gestion",
       name: "Gestion",
       component: () => import("@/views/Usuarios/Gestion.vue"),
+    },
+    {
+      path: "/man/usu/cargos",
+      name: "Cargos",
+      component: () => import("@/views/Mantenimiento/Usuarios/cargos.vue"),
     },
   ],
 });

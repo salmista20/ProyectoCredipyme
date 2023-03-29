@@ -15,4 +15,4 @@ use App\Http\Controllers\Mantenimiento\Usuarios\CargoController;
 |
 */
 
-Route::GET('/cargos/listar', [CargoController::class, 'listar']);
+Route::GET('/man/usu/cargos/listar_recursos', [CargoController::class, 'listar_recursos']);

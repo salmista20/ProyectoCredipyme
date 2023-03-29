@@ -9,10 +9,10 @@ use App\Models\Mantenimiento\Usuarios\Cargo;
 
 class CargoController extends Controller
 {
-    public function listar()
+    public function listar_recursos()
     {
-        $cargos = Cargo::all();
+        $cargos = Cargo::orderBy('cargo', 'asc')->get();
 
-        return $cargos;
+        return ['cargos' => $cargos];
     }
 }
