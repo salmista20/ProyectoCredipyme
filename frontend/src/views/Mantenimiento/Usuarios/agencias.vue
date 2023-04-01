@@ -2,12 +2,12 @@
 	<div>
 		<HeaderNav />
 		<div class="main-content">
-			<div class="layout-px-spacing dash_1 slot-mantenimiento-cargos">
+			<div class="layout-px-spacing dash_1 slot-mantenimiento-agencias">
 				<div class="row layout-top-spacing">
 					<div class="layout-spacing">
 						<div class="card component-card_1">
 							<headerClose
-								:title="'LISTA DE CARGOS'"
+								:title="'LISTA DE AGENCIAS'"
 								:area="'MANTENIMIENTO'"
 							></headerClose>
 							<h5 class="card-title">LISTA DE RESULTADOS</h5>
@@ -41,12 +41,12 @@
 									</div>
 								</div>
 								<DataTable
-									:value="cargos"
+									:value="agencias"
 									:scrollable="true"
 									scrollHeight="450px"
 									scrollDirection="both"
 									:filters="filters"
-									:globalFilterFields="['cargo']"
+									:globalFilterFields="['agencia']"
 									:paginator="false"
 									currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registro(s)"
 								>
@@ -69,21 +69,22 @@
 									</Column>
 									<Column
 										class="align-center"
-										field="cargo"
-										header="CARGO"
+										field="agencia"
+										header="AGENCIA"
 										style="width: 200px !important"
 									>
 										<template #body="{ data }">
-											{{ data.cargo }}
+											{{ data.agencia }}
 										</template>
 									</Column>
 									<Column
-										field="habilitado"
-										header="HABILITADO"
-										style="width: 50px !important"
+										class="align-center"
+										field="direccion"
+										header="DIRECCION"
+										style="width: 200px !important"
 									>
 										<template #body="{ data }">
-											{{ data.habilitado == 1 ? "SI" : "NO" }}
+											{{ data.direccion }}
 										</template>
 									</Column>
 								</DataTable>
@@ -94,7 +95,7 @@
 			</div>
 
 			<Dialog
-				class="mdlDatosCargo"
+				class="mdlDatosAgencia"
 				:visible="modal_visible"
 				:modal="true"
 				@update:visible="Cerrar"
@@ -102,32 +103,34 @@
 			>
 				<div class="row">
 					<div class="form-group">
-						<label class="label-title">CARGO</label>
+						<label class="label-title">AGENCIA</label>
 						<input
 							type="text"
 							class="form-control mayus"
-							v-model="frmDatosCargo.cargo"
+							v-model="frmDatosAgencia.agencia"
 							:class="[
 								submited
-									? v$.frmDatosCargo.cargo.$invalid
+									? v$.frmDatosAgencia.agencia.$invalid
 										? 'is-invalid'
 										: 'is-valid'
 									: '',
 							]"
 						/>
 					</div>
-					<div class="form-group" v-if="frmDatosCargo.modo == 'EDITAR'">
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								v-model="frmDatosCargo.habilitado"
-								id="chbHabilitado"
-							/>
-							<label class="label-title" for="chbHabilitado">
-								HABILITADO
-							</label>
-						</div>
+					<div class="form-group">
+						<label class="label-title">DIRECCIÓN</label>
+						<textarea
+							class="form-control mayus"
+							rows="2"
+							v-model="frmDatosAgencia.direccion"
+							:class="[
+								submited
+									? v$.frmDatosAgencia.direccion.$invalid
+										? 'is-invalid'
+										: 'is-valid'
+									: '',
+							]"
+						></textarea>
 					</div>
 				</div>
 				<hr />
@@ -152,10 +155,7 @@ import HeaderClose from "@/components/HeaderClose.vue";
 
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-
 import Dialog from "primevue/dialog";
-import Button from "primevue/button";
-
 import { FilterMatchMode } from "primevue/api";
 
 import { useVuelidate } from "@vuelidate/core";
@@ -173,28 +173,28 @@ export default {
 		DataTable,
 		Column,
 		Dialog,
-		Button,
 	},
 	data() {
 		return {
-			cargos: [],
+			agencias: [],
 			filters: {},
 
 			title_modal: null,
 			modal_visible: false,
 			submited: false,
 
-			frmDatosCargo: {
+			frmDatosAgencia: {
 				modo: null,
 				id: null,
-				cargo: null,
-				habilitado: false,
+				agencia: null,
+				direccion: null,
 			},
 		};
 	},
 	validations: {
-		frmDatosCargo: {
-			cargo: { required },
+		frmDatosAgencia: {
+			agencia: { required },
+			direccion: { required },
 		},
 	},
 	created() {
@@ -211,41 +211,41 @@ export default {
 		async ListarRecursos() {
 			let self = this;
 			return await axios
-				.get(api_url + "/man/usu/cargos/listar_recursos")
+				.get(api_url + "/man/usu/agencias/listar_recursos")
 				.then(function (response) {
-					self.cargos = response.data.cargos;
+					self.agencias = response.data.agencias;
 				});
 		},
 		Cerrar() {
 			this.modal_visible = false;
 		},
 		Editar(item) {
-			this.title_modal = "EDITAR CARGO";
-			this.frmDatosCargo.modo = "EDITAR";
+			this.title_modal = "EDITAR AGENCIA";
+			this.frmDatosAgencia.modo = "EDITAR";
 
-			this.frmDatosCargo.id = item.id;
-			this.frmDatosCargo.cargo = item.cargo;
-			this.frmDatosCargo.habilitado = item.habilitado;
+			this.frmDatosAgencia.id = item.id;
+			this.frmDatosAgencia.agencia = item.agencia;
+			this.frmDatosAgencia.direccion = item.direccion;
 
 			this.modal_visible = true;
 		},
 		Nuevo() {
 			this.Resetear();
-			this.frmDatosCargo.modo = "NUEVO";
-			this.title_modal = "NUEVO CARGO";
+			this.frmDatosAgencia.modo = "NUEVO";
+			this.title_modal = "NUEVA AGENCIA";
 			this.modal_visible = true;
 		},
 		Resetear() {
 			this.submited = false;
 
-			this.frmDatosCargo.id = null;
-			this.frmDatosCargo.cargo = null;
-			this.frmDatosCargo.habilitado = false;
+			this.frmDatosAgencia.id = null;
+			this.frmDatosAgencia.agencia = null;
+			this.frmDatosAgencia.direccion = null;
 		},
 		async Guardar() {
 			let self = this;
 			this.submited = true;
-			if (this.v$.frmDatosCargo.$invalid == true) {
+			if (this.v$.frmDatosAgencia.$invalid == true) {
 				Swal.fire({
 					icon: "error",
 					title: "¡Ups!",
@@ -254,10 +254,10 @@ export default {
 				return false;
 			}
 			let data = new FormData();
-			data.append("frmDatosCargo", JSON.stringify(this.frmDatosCargo));
+			data.append("frmDatosAgencia", JSON.stringify(this.frmDatosAgencia));
 
 			await axios
-				.post(api_url + "/man/usu/cargos/verificar", data)
+				.post(api_url + "/man/usu/agencias/verificar", data)
 				.then(function (response) {
 					let resultado = response.data.resultado;
 					if (resultado == "EXISTE") {
@@ -287,7 +287,7 @@ export default {
 											self.$swal.showLoading();
 
 											return await axios
-												.post(api_url + "/man/usu/cargos/guardar", data)
+												.post(api_url + "/man/usu/agencias/guardar", data)
 												.then((response) => {
 													self.submited = false;
 													self.ListarRecursos();
@@ -317,33 +317,33 @@ export default {
 </script>
 
 <style lang="scss">
-.slot-mantenimiento-cargos {
+.slot-mantenimiento-agencias {
 	width: 50% !important;
 	margin-left: 25% !important;
 }
 
-.mdlDatosCargo {
+.mdlDatosAgencia {
 	width: 30%;
 }
 
 @media (max-width: 992px) {
-	.slot-mantenimiento-cargos {
+	.slot-mantenimiento-agencias {
 		width: 80% !important;
 		margin-left: 10% !important;
 	}
 
-	.mdlDatosCargo {
+	.mdlDatosAgencia {
 		width: 40%;
 	}
 }
 
 @media (max-width: 400px) {
-	.slot-mantenimiento-cargos {
+	.slot-mantenimiento-agencias {
 		width: 98% !important;
 		margin-left: 1% !important;
 	}
 
-	.mdlDatosCargo {
+	.mdlDatosAgencia {
 		width: 80%;
 	}
 }

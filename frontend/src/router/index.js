@@ -29,6 +29,11 @@ const router = createRouter({
       name: "Cargos",
       component: () => import("@/views/Mantenimiento/Usuarios/cargos.vue"),
     },
+    {
+      path: "/man/usu/agencias",
+      name: "Agencias",
+      component: () => import("@/views/Mantenimiento/Usuarios/agencias.vue"),
+    },
   ],
 });
 

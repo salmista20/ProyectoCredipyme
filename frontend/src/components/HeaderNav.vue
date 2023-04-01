@@ -59,6 +59,10 @@ export default {
 									label: "Cargos",
 									to: "/man/usu/cargos",
 								},
+								{
+									label: "Agencias",
+									to: "/man/usu/agencias",
+								},
 							],
 						},
 					],

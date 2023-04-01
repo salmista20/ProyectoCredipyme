@@ -77,6 +77,13 @@ a{
 	flex-direction: column;
 	justify-content: center;
 }
+
+hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 0;
+    border-top: 1px solid gray;
+}
 /* ----------------------------------- */
 
 /* PRIME DATATABLE */
@@ -280,12 +287,50 @@ a{
 	}
 	
 	// ---------------------------------------
+
+	// PRIME MODAL ------------------------
+
+.p-dialog-mask{
+	z-index: 1050 !important;
+}
+
+.p-dialog-header{
+	padding: 5px !important;
+	padding-left: 25px !important;
+	padding-right: 5px !important;
+	background-color: $plomo-oscuro !important;
+	color:white !important;
+	span{
+		font-size: 15px !important;
+	}
+		}
+
+.p-dialog-content{
+	background-color: $color-bajo !important;
+	padding: 5px !important;
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+	padding-bottom: 10px !important;
+}
+
+.p-dialog-header-close{
+	color: #fff !important;
+	background-color: $main-1 !important;
+	border-color: $main-1;
+	box-shadow: 0 10px 20px -10px $main-1;
+    padding: 0.3rem 0.5rem !important;
+    font-size: $tamañoLetraButton !important;
+	
+
+}
+
     // ---------------------------------------
 
 .btn.rounded-circle {
 	width: 30px !important;
 	height: 30px !important;
 	padding: 2px !important;
+	
 }
 
 // BTN-MAIN-1----------------------------------
