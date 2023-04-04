@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -19,6 +20,16 @@ return new class extends Migration
             $table->longText('datos_actualizacion')->nullable();
             $table->timestamps();
         });
+
+        $roles = [];
+        $roles[] = (object) array('rol' => 'ADMINISTRADOR');
+        $roles[] = (object) array('rol' => 'USUARIO');
+
+        foreach ($roles as $value) {
+            DB::table('rol')->insert([
+                'rol' => $value->rol
+            ]);
+        }
     }
 
     /**

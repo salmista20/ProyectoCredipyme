@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Usuarios\UsuarioController;
 use App\Http\Controllers\Mantenimiento\Usuarios\CargoController;
 use App\Http\Controllers\Mantenimiento\Usuarios\AgenciaController;
 /*
@@ -15,6 +16,11 @@ use App\Http\Controllers\Mantenimiento\Usuarios\AgenciaController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::GET('/usu/gestion/listar_recursos', [UsuarioController::class, 'listar_recursos']);
+Route::POST('/usu/gestion/verificar', [UsuarioController::class, 'verificar']);
+Route::POST('/usu/gestion/guardar', [UsuarioController::class, 'guardar']);
+
 
 Route::GET('/man/usu/cargos/listar_recursos', [CargoController::class, 'listar_recursos']);
 Route::POST('/man/usu/cargos/verificar', [CargoController::class, 'verificar']);
