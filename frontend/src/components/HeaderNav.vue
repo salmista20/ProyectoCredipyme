@@ -36,7 +36,6 @@ export default {
 			items: [
 				{
 					label: "Usuarios",
-
 					icon: "pi pi-fw pi-user",
 					items: [
 						{
@@ -63,6 +62,15 @@ export default {
 									label: "Agencias",
 									to: "/man/usu/agencias",
 								},
+							],
+						},
+						{
+							label: "Créditos",
+							items: [
+								{ label: "Sectores", to: "/man/cre/sectores" },
+								{ label: "Productos" },
+								{ label: "Tipos" },
+								{ label: "Estados" },
 							],
 						},
 					],

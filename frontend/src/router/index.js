@@ -34,6 +34,11 @@ const router = createRouter({
       name: "Agencias",
       component: () => import("@/views/Mantenimiento/Usuarios/agencias.vue"),
     },
+    {
+      path: "/man/cre/sectores",
+      name: "Sectores",
+      component: () => import("@/views/Mantenimiento/Credito/sectores.vue"),
+    },
   ],
 });
 

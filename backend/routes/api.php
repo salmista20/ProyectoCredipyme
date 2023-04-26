@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Usuarios\UsuarioController;
 use App\Http\Controllers\Mantenimiento\Usuarios\CargoController;
 use App\Http\Controllers\Mantenimiento\Usuarios\AgenciaController;
+use App\Http\Controllers\Mantenimiento\Credito\SectorController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,3 +30,7 @@ Route::POST('/man/usu/cargos/guardar', [CargoController::class, 'guardar']);
 Route::GET('/man/usu/agencias/listar_recursos', [AgenciaController::class, 'listar_recursos']);
 Route::POST('/man/usu/agencias/verificar', [AgenciaController::class, 'verificar']);
 Route::POST('/man/usu/agencias/guardar', [AgenciaController::class, 'guardar']);
+
+Route::GET('/man/cre/sectores/listar_recursos', [SectorController::class, 'listar_recursos']);
+Route::POST('/man/cre/sectores/verificar', [SectorController::class, 'verificar']);
+Route::POST('/man/cre/sectores/guardar', [SectorController::class, 'guardar']);
