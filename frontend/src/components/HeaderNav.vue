@@ -68,7 +68,7 @@ export default {
 							label: "Créditos",
 							items: [
 								{ label: "Sectores", to: "/man/cre/sectores" },
-								{ label: "Productos" },
+								{ label: "Productos", to: "/man/cre/productos"  },
 								{ label: "Tipos" },
 								{ label: "Estados" },
 							],
