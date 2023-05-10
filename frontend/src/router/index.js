@@ -38,6 +38,10 @@ const router = createRouter({
       path: "/man/cre/sectores",
       name: "Sectores",
       component: () => import("@/views/Mantenimiento/Credito/sectores.vue"),
+     }, {
+      path: "/man/cre/tipos",
+      name: "Tipos",
+      component: () => import("@/views/Mantenimiento/Credito/tipos.vue"),
     },
   ],
 });
