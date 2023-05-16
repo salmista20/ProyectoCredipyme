@@ -177,7 +177,7 @@ export default {
 	},
 	data() {
 		return {
-			sectores: [],
+			productos: [],
 			filters: {},
 
 			title_modal: null,
@@ -187,20 +187,20 @@ export default {
 			frmDatosProducto: {
 				modo: null,
 				id: null,
-				sector: null,
+				producto: null,
 				habilitado: false,
 			},
 		};
 	},
 	validations: {
 		frmDatosProducto: {
-			sector: { required },
+			producto: { required },
 		},
 	},
 	created() {
 		this.filters = {
 			global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-			sector: { value: null, matchMode: FilterMatchMode.CONTAINS },
+			producto: { value: null, matchMode: FilterMatchMode.CONTAINS },
 		};
 	},
 	mounted() {
@@ -213,7 +213,7 @@ export default {
 			return await axios
 				.get(api_url + "/man/cre/sectores/listar_recursos")
 				.then(function (response) {
-					self.sectores = response.data.sectores;
+					self.productos = response.data.sectores;
 				});
 		},
 		Cerrar() {
