@@ -177,30 +177,30 @@ export default {
 	},
 	data() {
 		return {
-			sectores: [],
+			tipos: [],
 			filters: {},
 
 			title_modal: null,
 			modal_visible: false,
 			submited: false,
 
-			frmDatosSector: {
+			frmDatosTipo: {
 				modo: null,
 				id: null,
-				sector: null,
+				tipo: null,
 				habilitado: false,
 			},
 		};
 	},
 	validations: {
-		frmDatosSector: {
-			sector: { required },
+		frmDatosTipo: {
+			tipo: { required },
 		},
 	},
 	created() {
 		this.filters = {
 			global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-			sector: { value: null, matchMode: FilterMatchMode.CONTAINS },
+			tipo: { value: null, matchMode: FilterMatchMode.CONTAINS },
 		};
 	},
 	mounted() {
@@ -211,41 +211,41 @@ export default {
 		async ListarRecursos() {
 			let self = this;
 			return await axios
-				.get(api_url + "/man/cre/sectores/listar_recursos")
+				.get(api_url + "/man/cre/tipos/listar_recursos")
 				.then(function (response) {
-					self.sectores = response.data.sectores;
+					self.tipos = response.data.tipos;
 				});
 		},
 		Cerrar() {
 			this.modal_visible = false;
 		},
 		Editar(item) {
-			this.title_modal = "EDITAR SECTOR";
-			this.frmDatosSector.modo = "EDITAR";
+			this.title_modal = "EDITAR TIPO";
+			this.frmDatosTipo.modo = "EDITAR";
 
-			this.frmDatosSector.id = item.id;
-			this.frmDatosSector.sector = item.sector;
-			this.frmDatosSector.habilitado = item.habilitado;
+			this.frmDatosTipo.id = item.id;
+			this.frmDatosTipo.tipo = item.tipo;
+			this.frmDatosTipo.habilitado = item.habilitado;
 
 			this.modal_visible = true;
 		},
 		Nuevo() {
 			this.Resetear();
-			this.frmDatosSector.modo = "NUEVO";
-			this.title_modal = "NUEVO SECTOR";
+			this.frmDatosTipo.modo = "NUEVO";
+			this.title_modal = "NUEVO TIPO";
 			this.modal_visible = true;
 		},
 		Resetear() {
 			this.submited = false;
 
-			this.frmDatosSector.id = null;
-			this.frmDatosSector.sector = null;
-			this.frmDatosSector.habilitado = false;
+			this.frmDatosTipo.id = null;
+			this.frmDatosTipo.tipo = null;
+			this.frmDatosTipo.habilitado = false;
 		},
 		async Guardar() {
 			let self = this;
 			this.submited = true;
-			if (this.v$.frmDatosSector.$invalid == true) {
+			if (this.v$.frmDatosTipo.$invalid == true) {
 				self.$swal.fire({
 					icon: "error",
 					title: "¡Ups!",
@@ -255,10 +255,10 @@ export default {
 			}
 
 			let data = new FormData();
-			data.append("frmDatosSector", JSON.stringify(this.frmDatosSector));
+			data.append("frmDatosTipo", JSON.stringify(this.frmDatosTipo));
 
 			await axios
-				.post(api_url + "/man/cre/sectores/verificar", data)
+				.post(api_url + "/man/cre/tipos/verificar", data)
 				.then(function (response) {
 					let resultado = response.data.resultado;
 					if (resultado == "EXISTE") {
@@ -288,7 +288,7 @@ export default {
 											self.$swal.showLoading();
 
 											return await axios
-												.post(api_url + "/man/cre/sectores/guardar", data)
+												.post(api_url + "/man/cre/tipos/guardar", data)
 												.then((response) => {
 													self.submited = false;
 													self.ListarRecursos();
@@ -318,33 +318,33 @@ export default {
 </script>
 
 <style lang="scss">
-.slot-mantenimiento-sectores {
+.slot-mantenimiento-tipos {
 	width: 50% !important;
 	margin-left: 25% !important;
 }
 
-.mdlDatosSector {
+.mdlDatosTipo {
 	width: 30%;
 }
 
 @media (max-width: 992px) {
-	.slot-mantenimiento-sectores {
+	.slot-mantenimiento-tipos {
 		width: 80% !important;
 		margin-left: 10% !important;
 	}
 
-	.mdlDatosSector {
+	.mdlDatosTipo {
 		width: 40%;
 	}
 }
 
 @media (max-width: 400px) {
-	.slot-mantenimiento-sectores {
+	.slot-mantenimiento-tipos {
 		width: 98% !important;
 		margin-left: 1% !important;
 	}
 
-	.mdlDatosSector {
+	.mdlDatosTipo {
 		width: 80%;
 	}
 }
