@@ -146,22 +146,26 @@
 </template>
 
 <script>
+// Libreria VUE-STORAGE
 import { useStorage } from "vue3-storage";
+
+// Componentes del proyecto
 import HeaderNav from "@/components/HeaderNav.vue";
 import HeaderClose from "@/components/HeaderClose.vue";
 
+// Libreria PRIMEVUE - DATATABLE
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
-
 import { FilterMatchMode } from "primevue/api";
 
+// Libreria VUELIDATE
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
 const api_url = import.meta.env.VITE_API_URL;
+
 export default {
 	setup() {
 		return { v$: useVuelidate(), storage: useStorage() };
@@ -177,7 +181,7 @@ export default {
 	},
 	data() {
 		return {
-			sectores: [],
+			estados: [],
 			filters: {},
 
 			title_modal: null,
@@ -187,20 +191,20 @@ export default {
 			frmDatosEstado: {
 				modo: null,
 				id: null,
-				sector: null,
+				estado: null,
 				habilitado: false,
 			},
 		};
 	},
 	validations: {
 		frmDatosEstado: {
-			sector: { required },
+			estado: { required },
 		},
 	},
 	created() {
 		this.filters = {
 			global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-			sector: { value: null, matchMode: FilterMatchMode.CONTAINS },
+			estado: { value: null, matchMode: FilterMatchMode.CONTAINS },
 		};
 	},
 	mounted() {
@@ -211,20 +215,20 @@ export default {
 		async ListarRecursos() {
 			let self = this;
 			return await axios
-				.get(api_url + "/man/cre/sectores/listar_recursos")
+				.get(api_url + "/man/cre/estados/listar_recursos")
 				.then(function (response) {
-					self.sectores = response.data.sectores;
+					self.estados = response.data.estados;
 				});
 		},
 		Cerrar() {
 			this.modal_visible = false;
 		},
 		Editar(item) {
-			this.title_modal = "EDITAR SECTOR";
+			this.title_modal = "EDITAR ESTADO";
 			this.frmDatosEstado.modo = "EDITAR";
 
 			this.frmDatosEstado.id = item.id;
-			this.frmDatosEstado.sector = item.sector;
+			this.frmDatosEstado.estado = item.estado;
 			this.frmDatosEstado.habilitado = item.habilitado;
 
 			this.modal_visible = true;
@@ -232,14 +236,14 @@ export default {
 		Nuevo() {
 			this.Resetear();
 			this.frmDatosEstado.modo = "NUEVO";
-			this.title_modal = "NUEVO SECTOR";
+			this.title_modal = "NUEVO ESTADO";
 			this.modal_visible = true;
 		},
 		Resetear() {
 			this.submited = false;
 
 			this.frmDatosEstado.id = null;
-			this.frmDatosEstado.sector = null;
+			this.frmDatosEstado.estado = null;
 			this.frmDatosEstado.habilitado = false;
 		},
 		async Guardar() {
@@ -258,7 +262,7 @@ export default {
 			data.append("frmDatosEstado", JSON.stringify(this.frmDatosEstado));
 
 			await axios
-				.post(api_url + "/man/cre/sectores/verificar", data)
+				.post(api_url + "/man/cre/estados/verificar", data)
 				.then(function (response) {
 					let resultado = response.data.resultado;
 					if (resultado == "EXISTE") {
@@ -288,7 +292,7 @@ export default {
 											self.$swal.showLoading();
 
 											return await axios
-												.post(api_url + "/man/cre/sectores/guardar", data)
+												.post(api_url + "/man/cre/estados/guardar", data)
 												.then((response) => {
 													self.submited = false;
 													self.ListarRecursos();
@@ -318,33 +322,33 @@ export default {
 </script>
 
 <style lang="scss">
-.slot-mantenimiento-sectores {
+.slot-mantenimiento-estados {
 	width: 50% !important;
 	margin-left: 25% !important;
 }
 
-.mdlDatosSector {
+.mdlDatosEstado {
 	width: 30%;
 }
 
 @media (max-width: 992px) {
-	.slot-mantenimiento-sectores {
+	.slot-mantenimiento-estados {
 		width: 80% !important;
 		margin-left: 10% !important;
 	}
 
-	.mdlDatosSector {
+	.mdlDatosEstado {
 		width: 40%;
 	}
 }
 
 @media (max-width: 400px) {
-	.slot-mantenimiento-sectores {
+	.slot-mantenimiento-estados {
 		width: 98% !important;
 		margin-left: 1% !important;
 	}
 
-	.mdlDatosSector {
+	.mdlDatosEstado {
 		width: 80%;
 	}
 }
