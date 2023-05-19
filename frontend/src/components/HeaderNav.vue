@@ -10,29 +10,43 @@
 				/>
 			</template>
 			<template #end>
-				<router-link to="/login"
-					><Button
-						label="Cerrar sesión"
-						severity="info"
-						icon="pi pi-power-off"
-						size="small"
-						rounded
-				/></router-link>
+				<div class="btn-group">
+					<button
+						class="btn btn-secondary dropdown-toggle"
+						type="button"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						{{ datos_sesion.usuario }}
+					</button>
+					<ul class="dropdown-menu">
+						<li>
+							<router-link class="dropdown-item" to="/login">Salir</router-link>
+						</li>
+					</ul>
+				</div>
 			</template>
 		</Menubar>
 	</div>
 </template>
 
 <script>
+import { useStorage } from "vue3-storage";
 import Menubar from "primevue/menubar";
 import Button from "primevue/button";
+import Avatar from "primevue/avatar";
 export default {
+	setup() {
+		return { storage: useStorage() };
+	},
 	components: {
 		Menubar,
 		Button,
+		Avatar,
 	},
 	data() {
 		return {
+			datos_sesion: this.storage.getStorageSync("datos_sesion"),
 			items: [
 				{
 					label: "Usuarios",

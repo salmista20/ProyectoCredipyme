@@ -4,14 +4,14 @@
 			<div class="logo">
 				<img src="@/assets/images/general/logo-corto-azul.svg" alt="" />
 			</div>
-			<div class="text-center mt-3 mb-2 name">Credipyme Online</div>
+			<div class="text-center mt-3 mb-2 name">Corporación Credipyme</div>
 			<div class="p-3 mt-3">
 				<div class="form-field d-flex align-items-center">
 					<i class="pi pi-user"></i>
 					<input
 						type="text"
-						placeholder="DNI"
-						v-model="frmDatosAcceso.dni"
+						placeholder="Usuario"
+						v-model="frmDatosAcceso.usuario"
 						spellcheck="false"
 						autocomplete="false"
 					/>
@@ -26,11 +26,11 @@
 						autocomplete="false"
 					/>
 				</div>
-				<button class="btn mt-3" @click="Acceder">Login</button>
+				<button class="btn mt-3" @click="Acceder">INGRESAR</button>
 			</div>
-			<div class="text-center fs-6">
+			<!-- <div class="text-center fs-6">
 				<a href="#">Olvidaste tu contraseña?</a>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>
@@ -50,14 +50,14 @@ export default {
 		return {
 			submited: false,
 			frmDatosAcceso: {
-				dni: null,
+				usuario: null,
 				clave: null,
 			},
 		};
 	},
 	validations: {
 		frmDatosAcceso: {
-			dni: { required },
+			usuario: { required },
 			clave: { required },
 		},
 	},
@@ -73,14 +73,19 @@ export default {
 				return false;
 			}
 
-			let dni = this.frmDatosAcceso.dni;
+			let usuario = this.frmDatosAcceso.usuario;
 			let clave = this.frmDatosAcceso.clave;
 
 			await axios
-				.get(api_url + "/acceso/cliente/" + dni + "/" + clave)
+				.get(api_url + "/login/acceder/" + usuario + "/" + clave)
 				.then(function (response) {
-					if (response.data != "NO_AUTORIZADO") {
-						self.storage.setStorageSync("cliente", response.data);
+					// console.log(response.data);
+					// return false;
+					if (response.data.resultado != "NO_AUTORIZADO") {
+						self.storage.setStorageSync(
+							"datos_sesion",
+							response.data.datos_sesion
+						);
 						return self.$router.push({
 							name: "Home",
 						});

@@ -16,29 +16,29 @@ export default {
 	},
 	data() {
 		return {
-			// cliente: this.storage.getStorageSync("cliente"),
+			usuario: this.storage.getStorageSync("datos_sesion"),
 		};
 	},
 	computed: {
 		nombre_cliente() {
-			// return (
-			// 	this.cliente.nombres +
-			// 	" " +
-			// 	this.cliente.apellido_paterno +
-			// 	" " +
-			// 	this.cliente.apellido_materno
-			// );
+			return (
+				this.usuario.nombres +
+				" " +
+				this.usuario.apellido_paterno +
+				" " +
+				this.usuario.apellido_materno
+			);
 		},
 	},
 
 	mounted() {
-		// this.$swal({
-		// 	icon: "success",
-		// 	title: "BIENVENIDO",
-		// 	text: this.nombre_cliente,
-		// 	timer: 1200,
-		// 	showConfirmButton: false,
-		// });
+		this.$swal({
+			icon: "success",
+			title: "BIENVENIDO",
+			text: this.nombre_cliente,
+			timer: 1200,
+			showConfirmButton: false,
+		});
 	},
 };
 </script>
