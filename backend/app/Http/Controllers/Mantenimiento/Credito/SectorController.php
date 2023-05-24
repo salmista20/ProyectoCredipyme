@@ -55,7 +55,7 @@ class SectorController extends Controller
             ]);
         } else if ($modo == 'EDITAR') {
             $sector_id = $frmDatosSector->id;
-            $habilitado = filter_var($frmDatosSector->habilitado, FILTER_VALIDATE_BOOLEAN);
+            $habilitado = $frmDatosSector->habilitado;
 
             Sector::where('id', $sector_id)->update([
                 'sector' => $sector,
