@@ -211,20 +211,20 @@ export default {
 		async ListarRecursos() {
 			let self = this;
 			return await axios
-				.get(api_url + "/man/cre/sectores/listar_recursos")
+				.get(api_url + "/man/cre/productos/listar_recursos")
 				.then(function (response) {
-					self.productos = response.data.sectores;
+					self.productos = response.data.productos;
 				});
 		},
 		Cerrar() {
 			this.modal_visible = false;
 		},
 		Editar(item) {
-			this.title_modal = "EDITAR SECTOR";
+			this.title_modal = "EDITAR PRODUCTO";
 			this.frmDatosProducto.modo = "EDITAR";
 
 			this.frmDatosProducto.id = item.id;
-			this.frmDatosProducto.sector = item.sector;
+			this.frmDatosProducto.producto = item.producto;
 			this.frmDatosProducto.habilitado = item.habilitado;
 
 			this.modal_visible = true;
@@ -232,14 +232,14 @@ export default {
 		Nuevo() {
 			this.Resetear();
 			this.frmDatosProducto.modo = "NUEVO";
-			this.title_modal = "NUEVO SECTOR";
+			this.title_modal = "NUEVO PRODUCTO";
 			this.modal_visible = true;
 		},
 		Resetear() {
 			this.submited = false;
 
 			this.frmDatosProducto.id = null;
-			this.frmDatosProducto.sector = null;
+			this.frmDatosProducto.producto = null;
 			this.frmDatosProducto.habilitado = false;
 		},
 		async Guardar() {
@@ -258,8 +258,10 @@ export default {
 			data.append("frmDatosProducto", JSON.stringify(this.frmDatosProducto));
 
 			await axios
-				.post(api_url + "/man/cre/sectores/verificar", data)
+				.post(api_url + "/man/cre/productos/verificar", data)
+				
 				.then(function (response) {
+				console.log(response.data);
 					let resultado = response.data.resultado;
 					if (resultado == "EXISTE") {
 						self.$swal.fire({
@@ -288,7 +290,7 @@ export default {
 											self.$swal.showLoading();
 
 											return await axios
-												.post(api_url + "/man/cre/sectores/guardar", data)
+												.post(api_url + "/man/cre/productos/guardar", data)
 												.then((response) => {
 													self.submited = false;
 													self.ListarRecursos();
@@ -318,33 +320,33 @@ export default {
 </script>
 
 <style lang="scss">
-.slot-mantenimiento-sectores {
+.slot-mantenimiento-productos {
 	width: 50% !important;
 	margin-left: 25% !important;
 }
 
-.mdlDatosSector {
+.mdlDatosProducto {
 	width: 30%;
 }
 
 @media (max-width: 992px) {
-	.slot-mantenimiento-sectores {
+	.slot-mantenimiento-productos {
 		width: 80% !important;
 		margin-left: 10% !important;
 	}
 
-	.mdlDatosSector {
+	.mdlDatosProducto {
 		width: 40%;
 	}
 }
 
 @media (max-width: 400px) {
-	.slot-mantenimiento-sectores {
+	.slot-mantenimiento-productos {
 		width: 98% !important;
 		margin-left: 1% !important;
 	}
 
-	.mdlDatosSector {
+	.mdlDatosProducto {
 		width: 80%;
 	}
 }
