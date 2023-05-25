@@ -164,10 +164,10 @@ hr {
 	}
 	
 	.align-right {
-		justify-content: flex-end;
+		text-align: right !important;
 	}
 	.align-center {
-		justify-content: center;
+		text-align: center !important;
 	}
 	.p-datatable th[class*="align-"] .p-column-header-content {
 		display: inline-flex;

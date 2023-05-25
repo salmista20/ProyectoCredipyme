@@ -6,27 +6,29 @@
 			</div>
 			<div class="text-center mt-3 mb-2 name">Corporación Credipyme</div>
 			<div class="p-3 mt-3">
-				<div class="form-field d-flex align-items-center">
-					<i class="pi pi-user"></i>
-					<input
-						type="text"
-						placeholder="Usuario"
-						v-model="frmDatosAcceso.usuario"
-						spellcheck="false"
-						autocomplete="false"
-					/>
-				</div>
-				<div class="form-field d-flex align-items-center">
-					<i class="pi pi-key"></i>
-					<input
-						type="password"
-						placeholder="Clave"
-						v-model="frmDatosAcceso.clave"
-						spellcheck="false"
-						autocomplete="false"
-					/>
-				</div>
-				<button class="btn mt-3" @click="Acceder">INGRESAR</button>
+				<form @submit.prevent="Acceder">
+					<div class="form-field d-flex align-items-center">
+						<i class="pi pi-user"></i>
+						<input
+							type="text"
+							placeholder="Usuario"
+							v-model="frmDatosAcceso.usuario"
+							spellcheck="false"
+							autocomplete="false"
+						/>
+					</div>
+					<div class="form-field d-flex align-items-center">
+						<i class="pi pi-key"></i>
+						<input
+							type="password"
+							placeholder="Clave"
+							v-model="frmDatosAcceso.clave"
+							spellcheck="false"
+							autocomplete="false"
+						/>
+					</div>
+					<button type="submit" class="btn mt-3">INGRESAR</button>
+				</form>
 			</div>
 			<!-- <div class="text-center fs-6">
 				<a href="#">Olvidaste tu contraseña?</a>
@@ -88,6 +90,7 @@ export default {
 						);
 						return self.$router.push({
 							name: "Home",
+							params: { showMessage: 1 },
 						});
 					} else {
 						self.$swal.fire({

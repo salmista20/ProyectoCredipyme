@@ -138,4 +138,16 @@ class UsuarioController extends Controller
 
         return $response;
     }
+
+    public function deshabilitar(Request $request)
+    {
+        $response = new \stdClass();
+
+        $usuario_id = $request->usuario_id;
+        Usuario::where('id', $usuario_id)->update(['habilitado' => 0]);
+
+        $response->success = true;
+
+        return $response;
+    }
 }

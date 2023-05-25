@@ -29,4 +29,8 @@ class Usuario extends Model
         'created_at',
         'updated_at'
     ];
+
+    protected $casts = [
+        'habilitado' => 'boolean',
+    ];
 }

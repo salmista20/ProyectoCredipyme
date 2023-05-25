@@ -1,7 +1,7 @@
 <template>
 	<div class="card-header d-flex align-items-center justify-content-between">
 		<strong>{{ title }}</strong>
-		<router-link to="/home" style="float: right !important">
+		<router-link to="/home/0" style="float: right !important">
 			<button
 				type="button"
 				class="btn btn-main-1 btn-sm rounded-circle"

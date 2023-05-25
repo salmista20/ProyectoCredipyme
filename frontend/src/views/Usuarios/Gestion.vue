@@ -106,7 +106,7 @@
 									<Column
 										field="trabajador"
 										header="NOMBRE COMPLETO"
-										style="width: 250px !important"
+										style="min-width: 200px !important"
 									>
 										<template #body="{ data }">
 											{{ data.colaborador }}
@@ -149,6 +149,16 @@
 									>
 										<template #body="{ data }">
 											{{ data.rol }}
+										</template>
+									</Column>
+									<Column
+										class="align-center"
+										field="habilitado"
+										header="HABILITADO"
+										style="width: 100px !important"
+									>
+										<template #body="{ data }">
+											{{ data.habilitado ? "SI" : "NO" }}
 										</template>
 									</Column>
 								</DataTable>
@@ -298,7 +308,7 @@
 						</select>
 					</div>
 
-					<!-- <div
+					<div
 						class="form-group col-md-4"
 						v-if="frmDatosUsuario.modo == 'EDITAR'"
 					>
@@ -306,12 +316,12 @@
 						<button
 							type="button"
 							class="btn btn-main-2 btn-icon-split"
-							@click="CesarUsuario"
+							@click="Deshabilitar"
 						>
 							<i class="pi pi-ban"></i>
-							<span class="text">CESAR USUARIO</span>
+							<span class="text">DESHABILITAR</span>
 						</button>
-					</div> -->
+					</div>
 				</div>
 
 				<hr />
@@ -560,6 +570,56 @@ export default {
 					}
 				});
 		},
+
+		async Deshabilitar() {
+			let self = this;
+
+			this.$swal
+				.fire({
+					title: "¿Desea deshabilitar este usuario?",
+					confirmButtonText: "Si",
+					showCancelButton: true,
+					cancelButtonText: "No",
+					allowOutsideClick: false,
+					backdrop: true,
+				})
+				.then((result) => {
+					if (result.isConfirmed) {
+						self.$swal.fire({
+							title: "REGISTRANDO",
+							showConfirmButton: false,
+							allowOutsideClick: false,
+							willOpen: async () => {
+								self.$swal.showLoading();
+
+								let data = new FormData();
+								data.append("usuario_id", this.frmDatosUsuario.id);
+
+								return await axios
+									.post(api_url + "/usu/gestion/deshabilitar", data)
+									.then((response) => {
+										console.log(response);
+										self.submited = false;
+										self.ListarRecursos();
+										self.Cerrar();
+
+										return self.$swal.fire({
+											icon: "success",
+											title: "¡ÉXITO!",
+											timer: 1200,
+											showConfirmButton: false,
+										});
+									})
+									.catch((error) => {
+										self.$swal.showValidationMessage(
+											`Ha ocurrido un error, comunicar a TI: ${error}`
+										);
+									});
+							},
+						});
+					}
+				});
+		},
 	},
 };
 </script>
@@ -585,7 +645,7 @@ export default {
 	}
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
 	.slot-usuarios-gestion {
 		width: 98% !important;
 		margin-left: 1% !important;

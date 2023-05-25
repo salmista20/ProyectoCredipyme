@@ -25,6 +25,7 @@ Route::GET('/login/acceder/{usuario?}/{clave?}', [LoginController::class, 'valid
 Route::GET('/usu/gestion/listar_recursos', [UsuarioController::class, 'listar_recursos']);
 Route::POST('/usu/gestion/verificar', [UsuarioController::class, 'verificar']);
 Route::POST('/usu/gestion/guardar', [UsuarioController::class, 'guardar']);
+Route::POST('/usu/gestion/deshabilitar', [UsuarioController::class, 'deshabilitar']);
 
 
 Route::GET('/man/usu/cargos/listar_recursos', [CargoController::class, 'listar_recursos']);

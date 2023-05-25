@@ -32,13 +32,17 @@ export default {
 	},
 
 	mounted() {
-		this.$swal({
-			icon: "success",
-			title: "BIENVENIDO",
-			text: this.nombre_cliente,
-			timer: 1200,
-			showConfirmButton: false,
-		});
+		let showMessage = this.$route.params.showMessage;
+
+		if (showMessage == 1) {
+			this.$swal({
+				icon: "success",
+				title: "BIENVENIDO",
+				text: this.nombre_cliente,
+				timer: 1200,
+				showConfirmButton: false,
+			});
+		}
 	},
 };
 </script>

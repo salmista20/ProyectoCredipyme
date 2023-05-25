@@ -2,12 +2,14 @@
 	<div class="card relative z-2">
 		<Menubar :model="items">
 			<template #start>
-				<img
-					alt="logo"
-					src="@/assets/images/general/logo-corto-azul.svg"
-					height="40"
-					class="mr-2"
-				/>
+				<router-link to="/home/0">
+					<img
+						alt="logo"
+						src="@/assets/images/general/logo-corto-azul.svg"
+						height="40"
+						class="mr-2"
+					/>
+				</router-link>
 			</template>
 			<template #end>
 				<div class="btn-group">
