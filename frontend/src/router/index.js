@@ -35,6 +35,11 @@ const router = createRouter({
       component: () => import("@/views/Mantenimiento/Usuarios/agencias.vue"),
     },
     {
+      path: "/man/usu/permisos",
+      name: "Permisos",
+      component: () => import("@/views/Mantenimiento/Usuarios/permisos.vue"),
+    },
+    {
       path: "/man/cre/sectores",
       name: "Sectores",
       component: () => import("@/views/Mantenimiento/Credito/sectores.vue"),

@@ -163,6 +163,9 @@ hr {
 	   border: none !important;
 	}
 	
+	.align-left {
+		text-align: left !important;
+	}
 	.align-right {
 		text-align: right !important;
 	}
@@ -684,6 +687,10 @@ input.form-control{
         border-color: $plomo-claro !important;
 
     }
+}
+
+.p-menubar .p-submenu-list{
+	z-index:2 !important;
 }
 
 /* Para los elementos deshabilitados */

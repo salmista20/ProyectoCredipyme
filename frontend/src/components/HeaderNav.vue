@@ -78,6 +78,10 @@ export default {
 									label: "Agencias",
 									to: "/man/usu/agencias",
 								},
+								{
+									label: "Permisos",
+									to: "/man/usu/permisos",
+								},
 							],
 						},
 						{

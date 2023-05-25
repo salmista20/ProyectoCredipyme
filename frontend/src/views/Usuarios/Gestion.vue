@@ -169,9 +169,9 @@
 			</div>
 			<Dialog
 				class="mdlDatosUsuario"
-				:visible="modal_visible"
+				:visible="modal_datos_visible"
 				:modal="true"
-				@update:visible="Cerrar"
+				@update:visible="Cerrar('mdlDatosUsuario')"
 				:header="title_modal"
 			>
 				<div class="row">
@@ -310,26 +310,117 @@
 
 					<div
 						class="form-group col-md-4"
-						v-if="frmDatosUsuario.modo == 'EDITAR'"
-					>
-						<label class="label-title">Acciones adicionales:</label>
-						<button
-							type="button"
-							class="btn btn-main-2 btn-icon-split"
-							@click="Deshabilitar"
-						>
-							<i class="pi pi-ban"></i>
-							<span class="text">DESHABILITAR</span>
-						</button>
-					</div>
+						v-if="frmDatosUsuario.habilitado"
+					></div>
 				</div>
 
+				<hr />
+
+				<div class="text-right">
+					<div class="row">
+						<div class="align-left col-md-6">
+							<button
+								type="button"
+								class="btn btn-icon-split"
+								:class="[
+									frmDatosUsuario.habilitado ? 'btn-danger' : 'btn-success',
+								]"
+								@click="
+									frmDatosUsuario.habilitado
+										? ModificarHabilitado('DESHABILITAR')
+										: ModificarHabilitado('HABILITAR')
+								"
+							>
+								<i class="pi pi-ban"></i>
+								<span class="text">{{
+									frmDatosUsuario.habilitado ? "DESHABILITAR" : "HABILITAR"
+								}}</span>
+							</button>
+						</div>
+						<div class="col-md-6">
+							<button
+								type="button"
+								class="btn btn-main-1 btn-icon-split"
+								@click="Guardar"
+							>
+								<i class="pi pi-save"></i> <span class="text">GUARDAR</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</Dialog>
+			<Dialog
+				class="mdlCambiarClave"
+				:visible="modal_clave_visible"
+				:modal="true"
+				@update:visible="Cerrar('mdlCambiarClave')"
+				:header="'CAMBIAR CLAVE'"
+			>
+				<div class="row">
+					<div class="form-group col-md-6">
+						<div class="input-group">
+							<span class="input-group-text">DNI</span>
+
+							<input
+								class="form-control center"
+								type="text"
+								v-model="frmDatosClave.dni"
+								:disabled="true"
+							/>
+						</div>
+					</div>
+					<div class="form-group col-md-6">
+						<div class="input-group">
+							<span class="input-group-text">USUARIO</span>
+
+							<input
+								class="form-control center"
+								type="text"
+								v-model="frmDatosClave.usuario"
+								:disabled="true"
+							/>
+						</div>
+					</div>
+
+					<div class="form-group col-md-6">
+						<label class="label-title">CLAVE NUEVA</label>
+
+						<input
+							class="form-control center"
+							type="text"
+							v-model="frmDatosClave.clave_nueva"
+							:class="[
+								submited
+									? v$.frmDatosClave.clave_nueva.$invalid
+										? 'is-invalid'
+										: 'is-valid'
+									: '',
+							]"
+						/>
+					</div>
+
+					<div class="form-group col-md-6">
+						<label class="label-title">REPITA LA CLAVE</label>
+						<input
+							class="form-control center"
+							type="text"
+							v-model="frmDatosClave.clave_repetida"
+							:class="[
+								submited
+									? v$.frmDatosClave.clave_nueva.$invalid
+										? 'is-invalid'
+										: 'is-valid'
+									: '',
+							]"
+						/>
+					</div>
+				</div>
 				<hr />
 				<div class="text-right">
 					<button
 						type="button"
-						class="btn btn-main-1 btn-icon-split"
-						@click="Guardar"
+						class="btn btn-main-2 btn-icon-split"
+						@click="GuardarClave"
 					>
 						<i class="pi pi-save"></i> <span class="text">GUARDAR</span>
 					</button>
@@ -375,7 +466,8 @@ export default {
 			agencias: [],
 
 			submited: false,
-			modal_visible: false,
+			modal_datos_visible: false,
+			modal_clave_visible: false,
 			title_modal: null,
 
 			frmDatosUsuario: {
@@ -388,6 +480,13 @@ export default {
 				agencia_id: 0,
 				cargo_id: 0,
 				modo: null,
+			},
+			frmDatosClave: {
+				usuario_id: null,
+				dni: null,
+				usuario: null,
+				clave_nueva: null,
+				clave_repetida: null,
 			},
 		};
 	},
@@ -414,6 +513,13 @@ export default {
 					nombres: { required },
 					agencia_id: { noZero },
 					cargo_id: { noZero },
+				},
+			};
+		} else {
+			return {
+				frmDatosClave: {
+					clave_nueva: { required },
+					clave_repetida: { required },
 				},
 			};
 		}
@@ -447,8 +553,13 @@ export default {
 				this.frmDatosUsuario.dni = value;
 			}
 		},
-		Cerrar() {
-			this.modal_visible = false;
+		Cerrar(modal) {
+			this.submited = false;
+			if (modal == "mdlDatosUsuario") {
+				this.modal_datos_visible = false;
+			} else if (modal == "mdlCambiarClave") {
+				this.modal_clave_visible = false;
+			}
 		},
 		Editar(item) {
 			this.title_modal = "EDITAR USUARIO";
@@ -462,14 +573,15 @@ export default {
 			this.frmDatosUsuario.nombres = item.nombres;
 			this.frmDatosUsuario.agencia_id = item.agencia_id;
 			this.frmDatosUsuario.cargo_id = item.cargo_id;
+			this.frmDatosUsuario.habilitado = item.habilitado;
 
-			this.modal_visible = true;
+			this.modal_datos_visible = true;
 		},
 		Nuevo() {
 			this.Resetear();
 			this.frmDatosUsuario.modo = "NUEVO";
 			this.title_modal = "NUEVO USUARIO";
-			this.modal_visible = true;
+			this.modal_datos_visible = true;
 		},
 		Resetear() {
 			this.submited = false;
@@ -549,7 +661,7 @@ export default {
 													console.log(response);
 													self.submited = false;
 													self.ListarRecursos();
-													self.Cerrar();
+													self.Cerrar("mdlDatosUsuario");
 
 													return self.$swal.fire({
 														icon: "success",
@@ -571,12 +683,22 @@ export default {
 				});
 		},
 
-		async Deshabilitar() {
+		async ModificarHabilitado(modo) {
 			let self = this;
 
+			let ruta = null;
+			let mensaje = null;
+
+			if (modo == "HABILITAR") {
+				ruta = "/usu/gestion/habilitar";
+				mensaje = "¿Desea deshabilitar este usuario?";
+			} else if (modo == "DESHABILITAR") {
+				ruta = "/usu/gestion/deshabilitar";
+				mensaje = "¿Desea habilitar este usuario?";
+			}
 			this.$swal
 				.fire({
-					title: "¿Desea deshabilitar este usuario?",
+					title: mensaje,
 					confirmButtonText: "Si",
 					showCancelButton: true,
 					cancelButtonText: "No",
@@ -596,12 +718,90 @@ export default {
 								data.append("usuario_id", this.frmDatosUsuario.id);
 
 								return await axios
-									.post(api_url + "/usu/gestion/deshabilitar", data)
+									.post(api_url + ruta, data)
 									.then((response) => {
 										console.log(response);
 										self.submited = false;
 										self.ListarRecursos();
-										self.Cerrar();
+										self.Cerrar("mdlDatosUsuario");
+
+										return self.$swal.fire({
+											icon: "success",
+											title: "¡ÉXITO!",
+											timer: 1200,
+											showConfirmButton: false,
+										});
+									})
+									.catch((error) => {
+										self.$swal.showValidationMessage(
+											`Ha ocurrido un error, comunicar a TI: ${error}`
+										);
+									});
+							},
+						});
+					}
+				});
+		},
+
+		async ModificarClave(item) {
+			this.submited = false;
+			this.frmDatosClave.usuario_id = item.id;
+			this.frmDatosClave.dni = item.dni;
+			this.frmDatosClave.usuario = item.usuario;
+
+			this.modal_clave_visible = true;
+		},
+
+		async GuardarClave() {
+			let self = this;
+			this.submited = true;
+
+			if (this.v$.frmDatosClave.$invalid) {
+				this.$swal.fire({
+					icon: "error",
+					title: "¡Ups!",
+					text: "Hay uno o más campos vacíos, verifique.",
+				});
+				return false;
+			}
+
+			if (this.frmDatosClave.clave_nueva != this.frmDatosClave.clave_repetida) {
+				this.$swal.fire({
+					icon: "error",
+					title: "¡Ups!",
+					text: "La clave no coincide, revise por favor.",
+				});
+				return false;
+			}
+
+			this.$swal
+				.fire({
+					title: "¿Desea continuar?",
+					confirmButtonText: "Si",
+					showCancelButton: true,
+					cancelButtonText: "No",
+					allowOutsideClick: false,
+					backdrop: true,
+				})
+				.then((result) => {
+					if (result.isConfirmed) {
+						let data = new FormData();
+						data.append("frmDatosClave", JSON.stringify(this.frmDatosClave));
+
+						self.$swal.fire({
+							title: "REGISTRANDO",
+							showConfirmButton: false,
+							allowOutsideClick: false,
+							willOpen: async () => {
+								self.$swal.showLoading();
+
+								return await axios
+									.post(api_url + "/usu/gestion/cambiar_clave", data)
+									.then((response) => {
+										console.log(response);
+										self.submited = false;
+										self.ListarRecursos();
+										self.Cerrar("mdlCambiarClave");
 
 										return self.$swal.fire({
 											icon: "success",
@@ -633,6 +833,9 @@ export default {
 .mdlDatosUsuario {
 	width: 50%;
 }
+.mdlCambiarClave {
+	width: 30%;
+}
 
 @media (max-width: 992px) {
 	.slot-usuarios-gestion {
@@ -641,6 +844,9 @@ export default {
 	}
 
 	.mdlDatosUsuario {
+		width: 40%;
+	}
+	.mdlCambiarClave {
 		width: 40%;
 	}
 }
@@ -652,6 +858,9 @@ export default {
 	}
 
 	.mdlDatosUsuario {
+		width: 80%;
+	}
+	.mdlCambiarClave {
 		width: 80%;
 	}
 }

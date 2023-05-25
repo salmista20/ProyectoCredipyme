@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuarios\UsuarioController;
 use App\Http\Controllers\Mantenimiento\Usuarios\CargoController;
 use App\Http\Controllers\Mantenimiento\Usuarios\AgenciaController;
+use App\Http\Controllers\Mantenimiento\Usuarios\PermisoController;
 use App\Http\Controllers\Mantenimiento\Credito\SectorController;
 use App\Http\Controllers\Mantenimiento\Credito\EstadoController;
 /*
@@ -25,7 +26,9 @@ Route::GET('/login/acceder/{usuario?}/{clave?}', [LoginController::class, 'valid
 Route::GET('/usu/gestion/listar_recursos', [UsuarioController::class, 'listar_recursos']);
 Route::POST('/usu/gestion/verificar', [UsuarioController::class, 'verificar']);
 Route::POST('/usu/gestion/guardar', [UsuarioController::class, 'guardar']);
+Route::POST('/usu/gestion/habilitar', [UsuarioController::class, 'habilitar']);
 Route::POST('/usu/gestion/deshabilitar', [UsuarioController::class, 'deshabilitar']);
+Route::POST('/usu/gestion/cambiar_clave', [UsuarioController::class, 'cambiar_clave']);
 
 
 Route::GET('/man/usu/cargos/listar_recursos', [CargoController::class, 'listar_recursos']);
@@ -35,6 +38,10 @@ Route::POST('/man/usu/cargos/guardar', [CargoController::class, 'guardar']);
 Route::GET('/man/usu/agencias/listar_recursos', [AgenciaController::class, 'listar_recursos']);
 Route::POST('/man/usu/agencias/verificar', [AgenciaController::class, 'verificar']);
 Route::POST('/man/usu/agencias/guardar', [AgenciaController::class, 'guardar']);
+
+Route::GET('/man/usu/permisos/listar_recursos', [PermisoController::class, 'listar_recursos']);
+Route::POST('/man/usu/permisos/verificar', [PermisoController::class, 'verificar']);
+Route::POST('/man/usu/permisos/guardar', [PermisoController::class, 'guardar']);
 
 Route::GET('/man/cre/sectores/listar_recursos', [SectorController::class, 'listar_recursos']);
 Route::POST('/man/cre/sectores/verificar', [SectorController::class, 'verificar']);

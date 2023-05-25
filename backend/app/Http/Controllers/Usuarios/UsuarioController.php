@@ -139,6 +139,17 @@ class UsuarioController extends Controller
         return $response;
     }
 
+    public function habilitar(Request $request)
+    {
+        $response = new \stdClass();
+
+        $usuario_id = $request->usuario_id;
+        Usuario::where('id', $usuario_id)->update(['habilitado' => 1]);
+
+        $response->success = true;
+
+        return $response;
+    }
     public function deshabilitar(Request $request)
     {
         $response = new \stdClass();
@@ -148,6 +159,26 @@ class UsuarioController extends Controller
 
         $response->success = true;
 
+        return $response;
+    }
+
+    public function cambiar_clave(Request $request)
+    {
+        $response = new \stdClass;
+
+        $datos_registro = (new MainController)->datos_registro();
+        $frmDatosClave = json_decode($request->frmDatosClave);
+
+        $usuario_id =  $frmDatosClave->usuario_id;
+        $clave_nueva =  $frmDatosClave->clave_nueva;
+
+        Usuario::where('id', $usuario_id)
+            ->update([
+                'clave' => Hash::make($clave_nueva),
+                'datos_actualizacion' => $datos_registro
+            ]);
+
+        $response->success = true;
         return $response;
     }
 }
