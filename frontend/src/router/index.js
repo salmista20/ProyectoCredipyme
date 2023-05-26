@@ -25,6 +25,11 @@ const router = createRouter({
       component: () => import("@/views/Usuarios/Gestion.vue"),
     },
     {
+      path: "/usu/permisos",
+      name: "UsuariosPermisos",
+      component: () => import("@/views/Usuarios/Permisos.vue"),
+    },
+    {
       path: "/man/usu/cargos",
       name: "Cargos",
       component: () => import("@/views/Mantenimiento/Usuarios/cargos.vue"),

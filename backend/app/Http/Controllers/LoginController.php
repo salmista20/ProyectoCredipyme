@@ -42,12 +42,15 @@ class LoginController extends Controller
                     'cargo' => $cargo ? $cargo->cargo : null,
                     'agencia' => $agencia ? $agencia->agencia : null
                 ];
+
+                $agencias = Agencia::orderBy('agencia', 'asc')->get();
             }
         }
 
         return [
             'resultado' => $resultado,
-            'datos_sesion' => $datos_sesion
+            'datos_sesion' => $datos_sesion,
+            'agencias' => $agencias
         ];
     }
 }

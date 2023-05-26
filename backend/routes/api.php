@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Usuarios\UsuarioController;
+use App\Http\Controllers\Usuarios\UsuarioPermisoController;
 use App\Http\Controllers\Mantenimiento\Usuarios\CargoController;
 use App\Http\Controllers\Mantenimiento\Usuarios\AgenciaController;
 use App\Http\Controllers\Mantenimiento\Usuarios\PermisoController;
@@ -30,6 +31,12 @@ Route::POST('/usu/gestion/habilitar', [UsuarioController::class, 'habilitar']);
 Route::POST('/usu/gestion/deshabilitar', [UsuarioController::class, 'deshabilitar']);
 Route::POST('/usu/gestion/cambiar_clave', [UsuarioController::class, 'cambiar_clave']);
 
+Route::GET('/usu/permisos/listar_recursos', [UsuarioPermisoController::class, 'listar_recursos']);
+Route::GET('/usu/permisos/listar_permisos/{usuario_id?}', [UsuarioPermisoController::class, 'listar_permisos']);
+Route::POST('/usu/permisos/copiar', [UsuarioPermisoController::class, 'copiar']);
+Route::POST('/usu/permisos/asignar', [UsuarioPermisoController::class, 'asignar']);
+Route::DELETE('/usu/permisos/eliminar/{usuario_permiso_id?}', [UsuarioPermisoController::class, 'eliminar']);
+Route::DELETE('/usu/permisos/eliminar_todos/{usuario_id?}', [UsuarioPermisoController::class, 'eliminar_todos']);
 
 Route::GET('/man/usu/cargos/listar_recursos', [CargoController::class, 'listar_recursos']);
 Route::POST('/man/usu/cargos/verificar', [CargoController::class, 'verificar']);

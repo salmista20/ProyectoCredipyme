@@ -60,6 +60,7 @@ export default {
 						},
 						{
 							label: "Permisos",
+							to: "/usu/permisos",
 						},
 					],
 				},
