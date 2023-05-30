@@ -69,6 +69,7 @@ export default {
 							items: [
 								{ label: "Sectores", to: "/man/cre/sectores" },
 								{ label: "Productos", to: "/man/cre/productos"  },
+								{ label: "Categorias", to: "/man/cre/categorias"  },
 								{ label: "Tipos" },
 								{ label: "Estados" },
 							],

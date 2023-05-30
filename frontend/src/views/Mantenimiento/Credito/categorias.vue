@@ -1,13 +1,13 @@
-<template>	
+<template>
 	<div>
 		<HeaderNav />
 		<div class="main-content">
-			<div class="layout-px-spacing dash_1 slot-mantenimiento-productos">
+			<div class="layout-px-spacing dash_1 slot-mantenimiento-categorias">
 				<div class="row layout-top-spacing">
 					<div class="layout-spacing">
 						<div class="card component-card_1">
 							<HeaderClose
-								:title="'LISTA DE PRODUCTOS'"
+								:title="'LISTA DE CATEGORIAS'"
 								:area="'MANTENIMIENTO'"
 							></HeaderClose>
 							<h5 class="card-title">LISTA DE RESULTADOS</h5>
@@ -36,21 +36,22 @@
 											@click="Nuevo"
 										>
 											<i class="pi pi-plus"></i>
-											<span class="text">NUEVO</span>
+											<span class="text">NUEVA</span>
 										</button>
 									</div>
 								</div>
 								<DataTable
-									:value="productos"
+									:value="categorias"
 									:scrollable="true"
 									scrollHeight="450px"
 									scrollDirection="both"
 									:filters="filters"
-									:globalFilterFields="['producto']"
+									:globalFilterFields="['categoria','descripcion']"
 									:paginator="false"
 									currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registro(s)"
 								>
-									<Column
+								
+								<Column
 										class="align-center"
 										field="editar"
 										header="EDITAR"
@@ -69,14 +70,24 @@
 									</Column>
 									<Column
 										class="align-center"
-										field="producto"
-										header="PRODUCTO"
+										field="categoria"
+										header="CATEGORIA"
 										style="width: 200px !important"
 									>
 										<template #body="{ data }">
-											{{ data.producto }}
+											{{ data.categoria }}
 										</template>
+										
 									</Column>
+									<Column
+									field="descripcion"
+									header="DESCRIPCIÓN"
+									style="width: 200px !important"
+								>
+									<template #body="{ data }">
+									{{ data.descripcion }}
+									</template>
+								</Column>
 									<Column
 										field="habilitado"
 										header="HABILITADO"
@@ -93,8 +104,8 @@
 				</div>
 			</div>
 
-			<Dialog
-				class="mdlDatosProducto"
+				<Dialog
+				class="mdlDatosCategoria"
 				:visible="modal_visible"
 				:modal="true"
 				@update:visible="Cerrar"
@@ -102,42 +113,41 @@
 			>
 				<div class="row">
 					<div class="form-group">
-						<label class="label-title">PRODUCTO</label>
-						<input
-							type="text"
-							class="form-control mayus"
-							v-model="frmDatosProducto.producto"
-							:class="[
-								submited
-									? v$.frmDatosProducto.producto.$invalid
-										? 'is-invalid'
-										: 'is-valid'
-									: '',
-							]"
-						/>
+					<label class="label-title">CATEGORÍA</label>
+					<input
+						class="form-control"
+						v-model="frmDatosCategoria.categoria"
+					/>
 					</div>
-					<div class="form-group" v-if="frmDatosProducto.modo == 'EDITAR'">
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								v-model="frmDatosProducto.habilitado"
-								id="chbHabilitado"
-							/>
-							<label class="label-title" for="chbHabilitado">
-								HABILITADO
-							</label>
+					<div class="form-group">
+					<label class="label-title">DESCRIPCIÓN</label>
+					<textarea
+						class="form-control"
+						v-model="frmDatosCategoria.descripcion"
+					></textarea>
+					</div>
+					<div class="form-group" v-if="frmDatosCategoria.modo == 'EDITAR'">
+					<label class = "label-title">HABILITADO</label>	
+					<div class="form-check">
+						<input
+						class="form-check-input"
+						type="checkbox"
+						v-model="frmDatosCategoria.habilitado"
+						id="chbHabilitado"
+						/>
+						<label class="form-check-label" for="chbHabilitado">habilitado</label>
 						</div>
 					</div>
 				</div>
 				<hr />
 				<div class="text-right">
 					<button
-						type="button"
-						class="btn btn-main-1 btn-icon-split"
-						@click="Guardar"
+					type="button"
+					class="btn btn-main-1 btn-icon-split"
+					@click="Guardar"
 					>
-						<i class="pi pi-save"></i> <span class="text">GUARDAR</span>
+					<i class="pi pi-save"></i> 
+					<span class="text">GUARDAR</span>
 					</button>
 				</div>
 			</Dialog>
@@ -177,30 +187,31 @@ export default {
 	},
 	data() {
 		return {
-			productos: [],
+			categorias: [],
 			filters: {},
 
 			title_modal: null,
 			modal_visible: false,
 			submited: false,
 
-			frmDatosProducto: {
+			frmDatosCategoria: {
 				modo: null,
 				id: null,
-				producto: null,
+				categoria: null,
+				descripcion: null,
 				habilitado: false,
 			},
 		};
 	},
 	validations: {
-		frmDatosProducto: {
-			producto: { required },
+		frmDatosCategoria: {
+			categoria: { required },
 		},
 	},
 	created() {
 		this.filters = {
 			global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-			producto: { value: null, matchMode: FilterMatchMode.CONTAINS },
+			categoria: { value: null, matchMode: FilterMatchMode.CONTAINS },
 		};
 	},
 	mounted() {
@@ -211,41 +222,41 @@ export default {
 		async ListarRecursos() {
 			let self = this;
 			return await axios
-				.get(api_url + "/man/cre/productos/listar_recursos")
+				.get(api_url + "/man/cre/categorias/listar_recursos")
 				.then(function (response) {
-					self.productos = response.data.productos;
+					self.categorias = response.data.categorias;
 				});
 		},
 		Cerrar() {
 			this.modal_visible = false;
 		},
 		Editar(item) {
-			this.title_modal = "EDITAR PRODUCTO";
-			this.frmDatosProducto.modo = "EDITAR";
+			this.title_modal = "EDITAR CATEGORIA";
+			this.frmDatosCategoria.modo = "EDITAR";
 
-			this.frmDatosProducto.id = item.id;
-			this.frmDatosProducto.producto = item.producto;
-			this.frmDatosProducto.habilitado = item.habilitado;
+			this.frmDatosCategoria.id = item.id;
+			this.frmDatosCategoria.categoria= item.categoria;
+			this.frmDatosCategoria.habilitado = item.habilitado;
 
 			this.modal_visible = true;
 		},
 		Nuevo() {
 			this.Resetear();
-			this.frmDatosProducto.modo = "NUEVO";
-			this.title_modal = "NUEVO PRODUCTO";
+			this.frmDatosCategoria.modo = "NUEVO";
+			this.title_modal = "NUEVA CATEGORIA";
 			this.modal_visible = true;
 		},
 		Resetear() {
 			this.submited = false;
 
-			this.frmDatosProducto.id = null;
-			this.frmDatosProducto.producto = null;
-			this.frmDatosProducto.habilitado = false;
+			this.frmDatosCategoria.id = null;
+			this.frmDatosCategoria.categoria = null;
+			this.frmDatosCategoria.habilitado = false;
 		},
 		async Guardar() {
 			let self = this;
 			this.submited = true;
-			if (this.v$.frmDatosProducto.$invalid == true) {
+			if (this.v$.frmDatosCategoria.$invalid == true) {
 				self.$swal.fire({
 					icon: "error",
 					title: "¡Ups!",
@@ -255,13 +266,11 @@ export default {
 			}
 
 			let data = new FormData();
-			data.append("frmDatosProducto", JSON.stringify(this.frmDatosProducto));
+			data.append("frmDatosCategoria", JSON.stringify(this.frmDatosCategoria));
 
 			await axios
-				.post(api_url + "/man/cre/productos/verificar", data)
-				
+				.post(api_url + "/man/cre/categorias/verificar", data)
 				.then(function (response) {
-				console.log(response.data);
 					let resultado = response.data.resultado;
 					if (resultado == "EXISTE") {
 						self.$swal.fire({
@@ -290,7 +299,7 @@ export default {
 											self.$swal.showLoading();
 
 											return await axios
-												.post(api_url + "/man/cre/productos/guardar", data)
+												.post(api_url + "/man/cre/categorias/guardar", data)
 												.then((response) => {
 													self.submited = false;
 													self.ListarRecursos();
@@ -320,33 +329,33 @@ export default {
 </script>
 
 <style lang="scss">
-.slot-mantenimiento-productos {
+.slot-mantenimiento-categorias {
 	width: 50% !important;
 	margin-left: 25% !important;
 }
 
-.mdlDatosProducto {
+.mdlDatosCategoria {
 	width: 30%;
 }
 
 @media (max-width: 992px) {
-	.slot-mantenimiento-productos {
+	.slot-mantenimiento-categorias {
 		width: 80% !important;
 		margin-left: 10% !important;
 	}
 
-	.mdlDatosProducto {
+	.mdlDatosCategoria {
 		width: 40%;
 	}
 }
 
 @media (max-width: 400px) {
-	.slot-mantenimiento-productos {
+	.slot-mantenimiento-categorias {
 		width: 98% !important;
 		margin-left: 1% !important;
 	}
 
-	.mdlDatosProducto {
+	.mdlDatosCategoria {
 		width: 80%;
 	}
 }
