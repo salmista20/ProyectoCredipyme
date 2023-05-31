@@ -126,6 +126,14 @@
 						v-model="frmDatosSubcategoria.descripcion"
 					></textarea>
 					</div>
+					<div class="form-group">
+						<label class="label-title">CATEGORÍA</label>
+						<select class="form-control" v-model="frmDatosSubcategoria.categoria_id">
+							<option value="">Seleccione una categoría</option>
+							<option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{ categoria.nombre }}</option>
+						</select>
+					</div>
+
 					<div class="form-group" v-if="frmDatosSubcategoria.modo == 'EDITAR'">
 					<label class = "label-title">HABILITADO</label>	
 					<div class="form-check">
