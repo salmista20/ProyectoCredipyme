@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('subcategoria', 50);
             $table->string('descripcion', 200);
-            $table->bigint('categoria_id');
+            $table->bigInteger('categoria_id');
             $table->tinyint('habilitado')->default(1);
             $table->timestamps();
         });
