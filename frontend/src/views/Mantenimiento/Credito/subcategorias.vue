@@ -2,12 +2,12 @@
 	<div>
 		<HeaderNav />
 		<div class="main-content">
-			<div class="layout-px-spacing dash_1 slot-mantenimiento-subsubcategorias">
+			<div class="layout-px-spacing dash_1 slot-mantenimiento-subcategorias">
 				<div class="row layout-top-spacing">
 					<div class="layout-spacing">
 						<div class="card component-card_1">
 							<HeaderClose
-								:title="'LISTA DE SUBSUBCATEGORIAS'"
+								:title="'LISTA DE SUBCATEGORIAS'"
 								:area="'MANTENIMIENTO'"
 							></HeaderClose>
 							<h5 class="card-title">LISTA DE RESULTADOS</h5>
@@ -41,7 +41,7 @@
 									</div>
 								</div>
 								<DataTable
-									:value="subsubcategorias"
+									:value="subcategorias"
 									:scrollable="true"
 									scrollHeight="450px"
 									scrollDirection="both"
@@ -113,7 +113,7 @@
 			>
 				<div class="row">
 					<div class="form-group">
-					<label class="label-title">CATEGORÍA</label>
+					<label class="label-title">SUBCATEGORÍA</label>
 					<input
 						class="form-control"
 						v-model="frmDatosSubcategoria.subcategoria"
