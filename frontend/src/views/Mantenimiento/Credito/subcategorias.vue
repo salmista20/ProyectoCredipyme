@@ -77,8 +77,18 @@
 										<template #body="{ data }">
 											{{ data.subcategoria }}
 										</template>
-										
 									</Column>
+										<Column
+										class="align-center"
+										field="categoria"
+										header="CATEGORIA"
+										style="width: 200px !important"
+									>
+										<template #body="{ data }">
+											{{ data.categoria }}
+										</template>						
+									</Column>
+									
 									<Column
 									field="descripcion"
 									header="DESCRIPCIÓN"

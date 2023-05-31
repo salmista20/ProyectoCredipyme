@@ -21,7 +21,7 @@ return new class extends Migration
             $table->boolean('habilitado')->default(1);
             $table->timestamps();
 
-            $table->foreign('categoria_id')->references('id')->on('credito_categoria');
+            $table->foreign('categoria.id')->references('id')->on('credito_categoria');
         });
         $subcategorias = [];
              $subcategorias[] = (object) array('subcategoria' => 'CATEGORIA_1', 'descripcion' => 'DESCRIPCION_1');
