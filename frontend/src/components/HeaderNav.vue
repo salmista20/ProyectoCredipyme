@@ -53,51 +53,104 @@ export default {
 				{
 					label: "Usuarios",
 					icon: "pi pi-fw pi-user",
+					visible: this.ValidarModulo("USUARIOS"),
 					items: [
 						{
 							label: "Gestión",
 							to: "/usu/gestion",
+							visible: this.ValidarSubmodulo("USUARIOS/GESTION"),
 						},
 						{
 							label: "Permisos",
 							to: "/usu/permisos",
+							visible: this.ValidarSubmodulo("USUARIOS/PERMISOS"),
+						},
+					],
+				},
+				{
+					label: "Clientes",
+					icon: "pi pi-briefcase",
+					visible: this.ValidarModulo("CLIENTES"),
+					items: [
+						{
+							label: "Gestión",
+							to: "/cli/gestion",
+							visible: this.ValidarSubmodulo("CLIENTES/GESTION"),
 						},
 					],
 				},
 				{
 					label: "Mantenimiento",
 					icon: "pi pi-fw pi-cog",
+					visible: this.ValidarModulo("MANTENIMIENTO"),
 					items: [
 						{
 							label: "Usuarios",
+							visible: this.ValidarModulo("MANTENIMIENTO/USUARIOS"),
 							items: [
 								{
 									label: "Cargos",
 									to: "/man/usu/cargos",
+									visible: this.ValidarSubmodulo(
+										"MANTENIMIENTO/USUARIOS_CARGOS"
+									),
 								},
 								{
 									label: "Agencias",
 									to: "/man/usu/agencias",
+									visible: this.ValidarSubmodulo(
+										"MANTENIMIENTO/USUARIOS_AGENCIAS"
+									),
 								},
 								{
 									label: "Permisos",
 									to: "/man/usu/permisos",
+									visible: this.ValidarSubmodulo(
+										"MANTENIMIENTO/USUARIOS_PERMISOS"
+									),
 								},
 							],
 						},
 						{
 							label: "Créditos",
+							visible: this.ValidarModulo("MANTENIMIENTO/CREDITOS"),
 							items: [
-								{ label: "Sectores", to: "/man/cre/sectores" },
+								{
+									label: "Sectores",
+									to: "/man/cre/sectores",
+									visible: this.ValidarSubmodulo(
+										"MANTENIMIENTO/CREDITOS_SECTORES"
+									),
+								},
 								{ label: "Productos" },
 								{ label: "Tipos" },
-								{ label: "Estados", to: "/man/cre/estados" },
+								{
+									label: "Estados",
+									to: "/man/cre/estados",
+									visible: this.ValidarSubmodulo(
+										"MANTENIMIENTO/CREDITOS_ESTADOS"
+									),
+								},
 							],
 						},
 					],
 				},
 			],
+			// items: [],
 		};
+	},
+
+	methods: {
+		ValidarModulo(modulo) {
+			return (
+				this.storage
+					.getStorageSync("permisos")
+					.filter((item) => item.includes(modulo)).length > 0
+			);
+		},
+		ValidarSubmodulo(submodulo) {
+			return this.storage.getStorageSync("permisos").includes(submodulo);
+		},
 	},
 };
 </script>

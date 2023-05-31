@@ -17,19 +17,17 @@ return new class extends Migration
         $this->down();
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('provincias', function (Blueprint $table) {
+        Schema::create('provincia', function (Blueprint $table) {
             $table->id();
             $table->string('provincia', 50);
             $table->unsignedBigInteger('departamento_id');
 
-            $table->foreign('departamento_id')->references('id')->on('departamentos')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreign('departamento_id')->references('id')->on('departamento');
         });
 
         Schema::enableForeignKeyConstraints();
 
-        DB::select("INSERT INTO `provincias` (`id`, `provincia`, `departamento_id`) VALUES
+        DB::select("INSERT INTO `provincia` (`id`, `provincia`, `departamento_id`) VALUES
         (1, 'CHACHAPOYAS ', 1),
         (2, 'BAGUA', 1),
         (3, 'BONGARA', 1),
@@ -232,8 +230,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('provincias');
-        Schema::enableForeignKeyConstraints();
+        Schema::dropIfExists('provincia');
     }
 };

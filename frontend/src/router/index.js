@@ -21,8 +21,13 @@ const router = createRouter({
     },
     {
       path: "/usu/gestion",
-      name: "Gestion",
+      name: "GestionUsuarios",
       component: () => import("@/views/Usuarios/Gestion.vue"),
+    },
+    {
+      path: "/cli/gestion",
+      name: "GestionClientes",
+      component: () => import("@/views/Clientes/Gestion.vue"),
     },
     {
       path: "/usu/permisos",

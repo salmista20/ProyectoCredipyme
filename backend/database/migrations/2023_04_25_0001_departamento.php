@@ -15,13 +15,13 @@ return new class extends Migration
     public function up()
     {
         $this->down();
-        Schema::create('departamentos', function (Blueprint $table) {
+        Schema::create('departamento', function (Blueprint $table) {
             $table->id();
             $table->string('departamento', 50);
         });
 
 
-        DB::select("INSERT INTO `departamentos` (`id`, `departamento`) VALUES
+        DB::select("INSERT INTO `departamento` (`id`, `departamento`) VALUES
         (1, 'AMAZONAS'),
         (2, 'ANCASH'),
         (3, 'APURIMAC'),
@@ -56,8 +56,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('departamentos');
-        Schema::enableForeignKeyConstraints();
+        Schema::dropIfExists('departamento');
     }
 };

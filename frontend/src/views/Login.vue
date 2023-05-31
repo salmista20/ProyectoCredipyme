@@ -89,6 +89,7 @@ export default {
 							response.data.datos_sesion
 						);
 						self.storage.setStorageSync("agencias", response.data.agencias);
+						self.storage.setStorageSync("permisos", response.data.permisos);
 						return self.$router.push({
 							name: "Home",
 							params: { showMessage: 1 },

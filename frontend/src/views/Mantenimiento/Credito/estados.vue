@@ -6,10 +6,7 @@
 				<div class="row layout-top-spacing">
 					<div class="layout-spacing">
 						<div class="card component-card_1">
-							<HeaderClose
-								:title="'LISTA DE ESTADOS'"
-								:area="'MANTENIMIENTO'"
-							></HeaderClose>
+							<HeaderClose :title="'LISTA DE ESTADOS'"></HeaderClose>
 							<h5 class="card-title">LISTA DE RESULTADOS</h5>
 							<div class="card-body">
 								<div class="row mb-2 col-12">

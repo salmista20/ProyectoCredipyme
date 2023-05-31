@@ -6,10 +6,7 @@
 				<div class="row layout-top-spacing">
 					<div class="layout-spacing">
 						<div class="card component-card_1">
-							<HeaderClose
-								:title="'LISTA DE USUARIOS'"
-								:area="'MANTENIMIENTO'"
-							></HeaderClose>
+							<HeaderClose :title="'LISTA DE USUARIOS'"></HeaderClose>
 							<h5 class="card-title">PANEL DE BÚSQUEDA</h5>
 							<div class="card-body">
 								<div class="row justify-content-center">

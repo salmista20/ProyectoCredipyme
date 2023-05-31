@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Usuarios\Usuario;
+use App\Models\Usuarios\UsuarioPermiso;
 use App\Models\Mantenimiento\Usuarios\Rol;
 use App\Models\Mantenimiento\Usuarios\Cargo;
 use App\Models\Mantenimiento\Usuarios\Agencia;
+use App\Models\Mantenimiento\Usuarios\Permiso;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 use Inertia\Inertia;
 
@@ -44,13 +47,28 @@ class LoginController extends Controller
                 ];
 
                 $agencias = Agencia::orderBy('agencia', 'asc')->get();
+
+                $lista_permisos = UsuarioPermiso::from('usuario_permiso as usu_per')
+                    ->select(
+                        DB::raw("CONCAT(per.modulo,'/',per.submodulo) as permiso")
+                    )
+                    ->join('permiso as per', 'usu_per.permiso_id', 'per.id')
+                    ->where('usu_per.usuario_id', $datos_usuario->id)
+                    ->get();
+
+                $permisos = [];
+
+                foreach ($lista_permisos as $item) {
+                    $permisos[] = $item->permiso;
+                }
             }
         }
 
         return [
             'resultado' => $resultado,
             'datos_sesion' => $datos_sesion,
-            'agencias' => $agencias
+            'agencias' => $agencias,
+            'permisos' => $permisos
         ];
     }
 }
