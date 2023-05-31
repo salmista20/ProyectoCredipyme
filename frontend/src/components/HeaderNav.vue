@@ -70,6 +70,7 @@ export default {
 								{ label: "Sectores", to: "/man/cre/sectores" },
 								{ label: "Productos", to: "/man/cre/productos"  },
 								{ label: "Categorias", to: "/man/cre/categorias"  },
+								{ label: "Subcategorias", to: "/man/cre/subcategorias"  },
 								{ label: "Tipos" },
 								{ label: "Estados" },
 							],

@@ -2,12 +2,12 @@
 	<div>
 		<HeaderNav />
 		<div class="main-content">
-			<div class="layout-px-spacing dash_1 slot-mantenimiento-categorias">
+			<div class="layout-px-spacing dash_1 slot-mantenimiento-subsubcategorias">
 				<div class="row layout-top-spacing">
 					<div class="layout-spacing">
 						<div class="card component-card_1">
 							<HeaderClose
-								:title="'LISTA DE CATEGORIAS'"
+								:title="'LISTA DE SUBSUBCATEGORIAS'"
 								:area="'MANTENIMIENTO'"
 							></HeaderClose>
 							<h5 class="card-title">LISTA DE RESULTADOS</h5>
@@ -41,12 +41,12 @@
 									</div>
 								</div>
 								<DataTable
-									:value="categorias"
+									:value="subsubcategorias"
 									:scrollable="true"
 									scrollHeight="450px"
 									scrollDirection="both"
 									:filters="filters"
-									:globalFilterFields="['categoria','descripcion']"
+									:globalFilterFields="['subcategoria','descripcion']"
 									:paginator="false"
 									currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registro(s)"
 								>
@@ -70,12 +70,12 @@
 									</Column>
 									<Column
 										class="align-center"
-										field="categoria"
-										header="CATEGORIA"
+										field="subcategoria"
+										header="SUBCATEGORIA"
 										style="width: 200px !important"
 									>
 										<template #body="{ data }">
-											{{ data.categoria }}
+											{{ data.subcategoria }}
 										</template>
 										
 									</Column>
@@ -105,7 +105,7 @@
 			</div>
 
 				<Dialog
-				class="mdlDatosCategoria"
+				class="mdlDatosSubcategoria"
 				:visible="modal_visible"
 				:modal="true"
 				@update:visible="Cerrar"
@@ -116,23 +116,23 @@
 					<label class="label-title">CATEGORÍA</label>
 					<input
 						class="form-control"
-						v-model="frmDatosCategoria.categoria"
+						v-model="frmDatosSubcategoria.subcategoria"
 					/>
 					</div>
 					<div class="form-group">
 					<label class="label-title">DESCRIPCIÓN</label>
 					<textarea
 						class="form-control"
-						v-model="frmDatosCategoria.descripcion"
+						v-model="frmDatosSubcategoria.descripcion"
 					></textarea>
 					</div>
-					<div class="form-group" v-if="frmDatosCategoria.modo == 'EDITAR'">
+					<div class="form-group" v-if="frmDatosSubcategoria.modo == 'EDITAR'">
 					<label class = "label-title">HABILITADO</label>	
 					<div class="form-check">
 					<input
 						class="form-check-input"
 						type="checkbox"
-						v-model="frmDatosCategoria.habilitado"
+						v-model="frmDatosSubcategoria.habilitado"
 						id="chbHabilitado"
 						/>
 						<label class="form-check-label" for="chbHabilitado">habilitado</label>
@@ -188,31 +188,31 @@ export default {
 	},
 	data() {
 		return {
-			categorias: [],
+			subcategorias: [],
 			filters: {},
 
 			title_modal: null,
 			modal_visible: false,
 			submited: false,
 
-			frmDatosCategoria: {
+			frmDatosSubcategoria: {
 				modo: null,
 				id: null,
-				categoria: null,
+				subcategoria: null,
 				descripcion: null,
 				habilitado: false,
 			},
 		};
 	},
 	validations: {
-		frmDatosCategoria: {
-			categoria: { required },
+		frmDatosSubcategoria: {
+			subcategoria: { required },
 		},
 	},
 	created() {
 		this.filters = {
 			global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-			categoria: { value: null, matchMode: FilterMatchMode.CONTAINS },
+			subcategoria: { value: null, matchMode: FilterMatchMode.CONTAINS },
 		};
 	},
 	mounted() {
@@ -223,41 +223,41 @@ export default {
 		async ListarRecursos() {
 			let self = this;
 			return await axios
-				.get(api_url + "/man/cre/categorias/listar_recursos")
+				.get(api_url + "/man/cre/subcategorias/listar_recursos")
 				.then(function (response) {
-					self.categorias = response.data.categorias;
+					self.subcategorias = response.data.subcategorias;
 				});
 		},
 		Cerrar() {
 			this.modal_visible = false;
 		},
 		Editar(item) {
-			this.title_modal = "EDITAR CATEGORIA";
-			this.frmDatosCategoria.modo = "EDITAR";
+			this.title_modal = "EDITAR SUBCATEGORIA";
+			this.frmDatosSubcategoria.modo = "EDITAR";
 
-			this.frmDatosCategoria.id = item.id;
-			this.frmDatosCategoria.categoria= item.categoria;
-			this.frmDatosCategoria.habilitado = item.habilitado;
+			this.frmDatosSubcategoria.id = item.id;
+			this.frmDatosSubcategoria.subcategoria= item.subcategoria;
+			this.frmDatosSubcategoria.habilitado = item.habilitado;
 
 			this.modal_visible = true;
 		},
 		Nuevo() {
 			this.Resetear();
-			this.frmDatosCategoria.modo = "NUEVO";
-			this.title_modal = "NUEVA CATEGORIA";
+			this.frmDatosSubcategoria.modo = "NUEVO";
+			this.title_modal = "NUEVA SUBCATEGORIA";
 			this.modal_visible = true;
 		},
 		Resetear() {
 			this.submited = false;
 
-			this.frmDatosCategoria.id = null;
-			this.frmDatosCategoria.categoria = null;
-			this.frmDatosCategoria.habilitado = false;
+			this.frmDatosSubcategoria.id = null;
+			this.frmDatosSubcategoria.subcategoria = null;
+			this.frmDatosSubcategoria.habilitado = false;
 		},
 		async Guardar() {
 			let self = this;
 			this.submited = true;
-			if (this.v$.frmDatosCategoria.$invalid == true) {
+			if (this.v$.frmDatosSubcategoria.$invalid == true) {
 				self.$swal.fire({
 					icon: "error",
 					title: "¡Ups!",
@@ -267,10 +267,10 @@ export default {
 			}
 
 			let data = new FormData();
-			data.append("frmDatosCategoria", JSON.stringify(this.frmDatosCategoria));
+			data.append("frmDatosSubcategoria", JSON.stringify(this.frmDatosSubcategoria));
 
 			await axios
-				.post(api_url + "/man/cre/categorias/verificar", data)
+				.post(api_url + "/man/cre/subcategorias/verificar", data)
 				.then(function (response) {
 					let resultado = response.data.resultado;
 					if (resultado == "EXISTE") {
@@ -300,7 +300,7 @@ export default {
 											self.$swal.showLoading();
 
 											return await axios
-												.post(api_url + "/man/cre/categorias/guardar", data)
+												.post(api_url + "/man/cre/subcategorias/guardar", data)
 												.then((response) => {
 													self.submited = false;
 													self.ListarRecursos();
@@ -330,33 +330,33 @@ export default {
 </script>
 
 <style lang="scss">
-.slot-mantenimiento-categorias {
+.slot-mantenimiento-subcategorias {
 	width: 50% !important;
 	margin-left: 25% !important;
 }
 
-.mdlDatosCategoria {
+.mdlDatosSubcategoria {
 	width: 30%;
 }
 
 @media (max-width: 992px) {
-	.slot-mantenimiento-categorias {
+	.slot-mantenimiento-subcategorias {
 		width: 80% !important;
 		margin-left: 10% !important;
 	}
 
-	.mdlDatosCategoria {
+	.mdlDatosSubcategoria {
 		width: 40%;
 	}
 }
 
 @media (max-width: 400px) {
-	.slot-mantenimiento-categorias {
+	.slot-mantenimiento-subcategorias {
 		width: 98% !important;
 		margin-left: 1% !important;
 	}
 
-	.mdlDatosCategoria {
+	.mdlDatosSubcategoria {
 		width: 80%;
 	}
 }

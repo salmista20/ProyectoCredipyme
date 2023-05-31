@@ -48,6 +48,13 @@ const router = createRouter({
       path: "/man/cre/categorias",
       name: "Categorias",
       component: () => import("@/views/Mantenimiento/Credito/categorias.vue"),
+      
+    },
+    {
+      path: "/man/cre/subcategorias",
+      name: "Subcategorias",
+      component: () => import("@/views/Mantenimiento/Credito/subcategorias.vue"),
+      
     },
   ],
 });

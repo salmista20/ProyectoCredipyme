@@ -9,6 +9,7 @@ use App\Http\Controllers\Mantenimiento\Usuarios\AgenciaController;
 use App\Http\Controllers\Mantenimiento\Credito\SectorController;
 use App\Http\Controllers\Mantenimiento\Credito\ProductoController;
 use App\Http\Controllers\Mantenimiento\Credito\CategoriaController;
+use App\Http\Controllers\Mantenimiento\Credito\SubcategoriaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -44,3 +45,7 @@ Route::POST('/man/cre/productos/guardar', [ProductoController::class, 'guardar']
 Route::GET('/man/cre/categorias/listar_recursos', [CategoriaController::class, 'listar_recursos']);
 Route::POST('/man/cre/categorias/verificar', [CategoriaController::class, 'verificar']);
 Route::POST('/man/cre/categorias/guardar', [CategoriaController::class, 'guardar']);
+
+Route::GET('/man/cre/subcategorias/listar_recursos', [SubcategoriaController::class, 'listar_recursos']);
+Route::POST('/man/cre/subcategorias/verificar', [SubcategoriaController::class, 'verificar']);
+Route::POST('/man/cre/subcategorias/guardar', [SubcategoriaController::class, 'guardar']);
