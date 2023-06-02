@@ -6,34 +6,34 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\MainController;
 use Illuminate\Http\Request;
 
-use App\Models\Mantenimiento\Credito\Sector;
+use App\Models\Mantenimiento\Credito\Tipo;
 
-class SectorController extends Controller
+class TipoController extends Controller
 {
     public function listar_recursos()
     {
-        $sectores = Sector::orderBy('sector', 'asc')->get();
+        $tipos = Tipo::orderBy('tipo', 'asc')->get();
 
-        return ['sectores' => $sectores];
+        return ['tipos' => $tipos];
     }
 
     public function verificar(Request $request)
     {
         $resultado = 'NO_EXISTE';
-        $frmDatosSector = json_decode($request->frmDatosSector);
+        $frmDatosSector = json_decode($request->frmDatosTipo);
 
         $modo = $frmDatosSector->modo;
-        $sector = $frmDatosSector->sector;
+        $tipo = $frmDatosSector->tipo;
         $id = $frmDatosSector->id;
 
-        $sector = Sector::where('sector', $sector)
+        $tipo = Tipo::where('tipo', $tipo)
             ->get()->last();
 
-        if ($sector != null) {
+        if ($tipo != null) {
             if ($modo == 'NUEVO') {
                 $resultado = 'EXISTE';
             } else if ($modo == 'EDITAR') {
-                if ($sector->id != $id) {
+                if ($tipo->id != $id) {
                     $resultado = 'EXISTE';
                 }
             }
@@ -45,20 +45,21 @@ class SectorController extends Controller
     {
         $response = new \stdClass();
 
-        $frmDatosSector = json_decode($request->frmDatosSector);
-        $sector = mb_strtoupper(trim($frmDatosSector->sector));
-        $modo = $frmDatosSector->modo;
+        $frmDatosTipo = json_decode($request->frmDatosTipo);
+        $tipo = mb_strtoupper(trim($frmDatosTipo->tipo));
+        $modo = $frmDatosTipo->modo;
 
         if ($modo == 'NUEVO') {
-            Sector::create([
-                'sector' => $sector
+            Tipo::create([
+
+                'tipo' => $tipo
             ]);
         } else if ($modo == 'EDITAR') {
-            $sector_id = $frmDatosSector->id;
-            $habilitado = filter_var($frmDatosSector->habilitado, FILTER_VALIDATE_BOOLEAN);
+            $tipo_id = $frmDatosTipo->id;
+            $habilitado = filter_var($frmDatosTipo->habilitado, FILTER_VALIDATE_BOOLEAN);
 
-            Sector::where('id', $sector_id)->update([
-                'sector' => $sector,
+            Tipo::where('id', $tipo_id)->update([
+                'tipo' => $tipo,
                 'habilitado' => $habilitado
             ]);
         }

@@ -34,3 +34,11 @@ Route::POST('/man/usu/agencias/guardar', [AgenciaController::class, 'guardar']);
 Route::GET('/man/cre/sectores/listar_recursos', [SectorController::class, 'listar_recursos']);
 Route::POST('/man/cre/sectores/verificar', [SectorController::class, 'verificar']);
 Route::POST('/man/cre/sectores/guardar', [SectorController::class, 'guardar']);
+
+Route::GET('/man/cre/categorias/listar_recursos', [CategoriaController::class, 'listar_recursos']);
+Route::POST('/man/cre/categorias/verificar', [CategoriaController::class, 'verificar']);
+Route::POST('/man/cre/categorias/guardar', [CategoriaController::class, 'guardar']);
+
+Route::GET('/man/cre/tipos/listar_recursos', [TipoController::class, 'listar_recursos']);
+Route::POST('/man/cre/tipos/verificar', [TipoController::class, 'verificar']);
+Route::POST('/man/cre/tipos/guardar', [TipoController::class, 'guardar']);
