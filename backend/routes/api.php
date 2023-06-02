@@ -7,6 +7,8 @@ use App\Http\Controllers\Usuarios\UsuarioController;
 use App\Http\Controllers\Mantenimiento\Usuarios\CargoController;
 use App\Http\Controllers\Mantenimiento\Usuarios\AgenciaController;
 use App\Http\Controllers\Mantenimiento\Credito\SectorController;
+use App\Http\Controllers\Mantenimiento\Credito\TipoController;
+use App\Http\Controllers\Mantenimiento\Credito\CategoriaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
