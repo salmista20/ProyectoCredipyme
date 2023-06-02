@@ -144,7 +144,7 @@
 		</div>
 	</div>
 </template>
-
+Actualizando
 <script></script>
 import { useStorage } from "vue3-storage";
 import HeaderNav from "@/components/HeaderNav.vue";
