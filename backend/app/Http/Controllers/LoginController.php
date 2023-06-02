@@ -25,6 +25,9 @@ class LoginController extends Controller
 
         $resultado = 'NO_AUTORIZADO';
         $datos_sesion = null;
+        $agencias = null;
+        $permisos = null;
+
         if ($datos_usuario  != null) {
             $clave_usuario = $datos_usuario->clave;
 
@@ -43,7 +46,8 @@ class LoginController extends Controller
                     'nombres' => $datos_usuario->nombres,
                     'rol' => $rol ? $rol->rol : null,
                     'cargo' => $cargo ? $cargo->cargo : null,
-                    'agencia' => $agencia ? $agencia->agencia : null
+                    'agencia' => $agencia ? $agencia->agencia : null,
+                    'agencia_id' => $agencia ? $agencia->id : null
                 ];
 
                 $agencias = Agencia::orderBy('agencia', 'asc')->get();

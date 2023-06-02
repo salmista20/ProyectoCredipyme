@@ -4,8 +4,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
+
 use App\Http\Controllers\Usuarios\UsuarioController;
 use App\Http\Controllers\Usuarios\UsuarioPermisoController;
+
+use App\Http\Controllers\Clientes\ClienteController;
+
 use App\Http\Controllers\Mantenimiento\Usuarios\CargoController;
 use App\Http\Controllers\Mantenimiento\Usuarios\AgenciaController;
 use App\Http\Controllers\Mantenimiento\Usuarios\PermisoController;
@@ -37,6 +41,8 @@ Route::POST('/usu/permisos/copiar', [UsuarioPermisoController::class, 'copiar'])
 Route::POST('/usu/permisos/asignar', [UsuarioPermisoController::class, 'asignar']);
 Route::DELETE('/usu/permisos/eliminar/{usuario_permiso_id?}', [UsuarioPermisoController::class, 'eliminar']);
 Route::DELETE('/usu/permisos/eliminar_todos/{usuario_id?}', [UsuarioPermisoController::class, 'eliminar_todos']);
+
+Route::GET('/cli/gestion/listar_recursos', [ClienteController::class, 'listar_recursos']);
 
 Route::GET('/man/usu/cargos/listar_recursos', [CargoController::class, 'listar_recursos']);
 Route::POST('/man/usu/cargos/verificar', [CargoController::class, 'verificar']);

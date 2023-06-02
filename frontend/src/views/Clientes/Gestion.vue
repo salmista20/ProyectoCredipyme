@@ -124,7 +124,11 @@
 				</div>
 			</div>
 
-			<MdlDatosCliente ref="mdlDatosCliente"></MdlDatosCliente>
+			<MdlDatosCliente
+				ref="mdlDatosCliente"
+				:agencias="agencias"
+				:datos_sesion="datos_sesion"
+			></MdlDatosCliente>
 		</div>
 	</div>
 </template>
@@ -166,6 +170,9 @@ export default {
 		agencias() {
 			return this.storage.getStorageSync("agencias");
 		},
+		datos_sesion() {
+			return this.storage.getStorageSync("datos_sesion");
+		},
 	},
 
 	methods: {
@@ -187,6 +194,8 @@ export default {
 		Nuevo() {
 			let mdlDatosCliente = this.$refs.mdlDatosCliente;
 
+			mdlDatosCliente.Resetear();
+			mdlDatosCliente.FiltrarAsesores();
 			mdlDatosCliente.modal_visible = true;
 		},
 		Editar() {},

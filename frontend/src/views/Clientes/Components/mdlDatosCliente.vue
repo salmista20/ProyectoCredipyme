@@ -51,7 +51,7 @@
 									:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 								></textarea>
 							</div>
-							<div class="form-group col-md-3 col-5">
+							<div class="form-group col-md-3 col-6">
 								<label class="label-title">APELLIDO MATERNO</label>
 
 								<textarea
@@ -68,7 +68,7 @@
 									:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 								></textarea>
 							</div>
-							<div class="form-group col-md-4 col-7">
+							<div class="form-group col-md-4 col-6">
 								<label class="label-title">NOMBRES</label>
 
 								<textarea
@@ -119,31 +119,57 @@
 									:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 								>
 									<option value="0" disabled>Seleccione...</option>
-									<option value="Soltero">Soltero</option>
-									<option value="Casado">Casado</option>
-									<option value="Conviviente">Conviviente</option>
-									<option value="Divorciado">Divorciado</option>
-									<option value="Viudo">Viudo</option>
+									<option value="SOLTERO">SOLTERO</option>
+									<option value="CASADO">CASADO</option>
+									<option value="CONVIVIENTE">CONVIVIENTE</option>
+									<option value="DIVORCIADO">DIVORCIADO</option>
+									<option value="VIUDO">VIUDO</option>
 								</select>
 							</div>
 							<div class="form-group col-md-3 col-6">
 								<label class="label-title">GÉNERO</label>
 
 								<select
-									class="form-control center"
+									class="form-select center"
 									:class="[
 										submited
-											? v$.frmDatosCliente.sexo.$invalid
+											? v$.frmDatosCliente.genero.$invalid
 												? 'is-invalid'
 												: 'is-valid'
 											: '',
 									]"
-									v-model="frmDatosCliente.sexo"
+									v-model="frmDatosCliente.genero"
 									:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 								>
-									<option value="0" disabled>Seleccione...</option>
-									<option value="F">Femenino</option>
-									<option value="M">Masculino</option>
+									<option :value="0" disabled>Seleccione...</option>
+									<option value="F">FEMENINO</option>
+									<option value="M">MASCULINO</option>
+									<option value="O">OTROS</option>
+								</select>
+							</div>
+							<div class="form-group col-md-3 col-6">
+								<label class="label-title">AGENCIA</label>
+
+								<select
+									class="form-select center"
+									:class="[
+										submited
+											? v$.frmDatosCliente.agencia_id.$invalid
+												? 'is-invalid'
+												: 'is-valid'
+											: '',
+									]"
+									v-model="frmDatosCliente.agencia_id"
+									@change="FiltrarAsesores"
+									:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
+								>
+									<option
+										v-for="(item, index) in agencias"
+										:key="index"
+										:value="item.id"
+									>
+										{{ item.agencia }}
+									</option>
 								</select>
 							</div>
 
@@ -180,7 +206,7 @@
 								<label class="label-title">ASESOR</label>
 
 								<select
-									class="form-control center"
+									class="form-select center"
 									:class="[
 										submited
 											? v$.frmDatosCliente.asesor_id.$invalid
@@ -194,20 +220,14 @@
 										frmDatosCliente.modo != 'NUEVO'
 									"
 								>
-									<option value="0" disabled>Seleccione...</option>
+									<option :value="0" disabled>Seleccione...</option>
 									<option
-										v-for="(asesor, index) in lista_asesores"
+										v-for="(item, index) in asesores_filtrados"
 										:key="index"
-										:value="asesor.dni"
+										:value="item.id"
 										selected
 									>
-										{{
-											asesor.usuario +
-											" - " +
-											asesor.nombres +
-											" " +
-											asesor.apellido_paterno
-										}}
+										{{ item.usuario }}
 									</option>
 								</select>
 							</div>
@@ -223,7 +243,7 @@
 							</div></div
 					></TabPanel>
 					<TabPanel header="DIRECCIÓN Y TELÉFONOS">
-						<div class="form-row">
+						<div class="row">
 							<div class="form-group col-md-12">
 								<label class="label-title">DIRECCIÓN</label>
 								<textarea
@@ -243,7 +263,7 @@
 							<div class="form-group col-md-4 col-4">
 								<label class="label-title">DEPARTAMENTO</label>
 								<select
-									class="form-control center"
+									class="form-select center"
 									:class="[
 										submited
 											? v$.frmDatosCliente.departamento_id.$invalid
@@ -255,7 +275,7 @@
 									v-model="frmDatosCliente.departamento_id"
 									:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 								>
-									<option value="0" disabled>Seleccione...</option>
+									<option :value="0" disabled>Seleccione...</option>
 									<option
 										v-for="departamento in departamentos"
 										:key="departamento.id"
@@ -269,7 +289,7 @@
 								<label class="label-title">PROVINCIA</label>
 
 								<select
-									class="form-control center"
+									class="form-select center"
 									:class="[
 										submited
 											? v$.frmDatosCliente.provincia_id.$invalid
@@ -281,7 +301,7 @@
 									v-model="frmDatosCliente.provincia_id"
 									:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 								>
-									<option value="0" disabled>Seleccione...</option>
+									<option :value="0" disabled>Seleccione...</option>
 									<option
 										v-for="provincia in provincias_filtradas"
 										:key="provincia.id"
@@ -295,7 +315,7 @@
 								<label class="label-title">DISTRITO</label>
 
 								<select
-									class="form-control center"
+									class="form-select center"
 									:class="[
 										submited
 											? v$.frmDatosCliente.distrito_id.$invalid
@@ -306,7 +326,7 @@
 									v-model="frmDatosCliente.distrito_id"
 									:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 								>
-									<option value="0" disabled>Seleccione...</option>
+									<option :value="0" disabled>Seleccione...</option>
 									<option
 										v-for="distrito in distritos_filtrados"
 										:key="distrito.id"
@@ -374,7 +394,7 @@
 									</div>
 
 									<select
-										class="form-control center"
+										class="form-select center"
 										v-model="frmDatosCliente.telefonos.o1"
 										:class="[
 											submited
@@ -386,10 +406,9 @@
 										:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 									>
 										<option :value="0" disabled>Seleccione...</option>
-										<option value="Movistar">Movistar</option>
-										<option value="Claro">Claro</option>
-										<option value="Bitel">Bitel</option>
-										<option value="Entel">Entel</option>
+										<option v-for="(item, index) in operadores" :key="index">
+											{{ item }}
+										</option>
 									</select>
 								</div>
 							</div>
@@ -442,15 +461,14 @@
 										<span class="input-group-text">2</span>
 									</div>
 									<select
-										class="form-control center"
+										class="form-select center"
 										v-model="frmDatosCliente.telefonos.o2"
 										:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 									>
-										<option value="0" disabled>Seleccione...</option>
-										<option value="Movistar">Movistar</option>
-										<option value="Claro">Claro</option>
-										<option value="Bitel">Bitel</option>
-										<option value="Entel">Entel</option>
+										<option :value="0" disabled>Seleccione...</option>
+										<option v-for="(item, index) in operadores" :key="index">
+											{{ item }}
+										</option>
 									</select>
 								</div>
 							</div>
@@ -495,15 +513,14 @@
 										<span class="input-group-text">3</span>
 									</div>
 									<select
-										class="form-control center"
+										class="form-select center"
 										v-model="frmDatosCliente.telefonos.o3"
 										:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 									>
-										<option value="0" disabled>Seleccione...</option>
-										<option value="Movistar">Movistar</option>
-										<option value="Claro">Claro</option>
-										<option value="Bitel">Bitel</option>
-										<option value="Entel">Entel</option>
+										<option :value="0" disabled>Seleccione...</option>
+										<option v-for="(item, index) in operadores" :key="index">
+											{{ item }}
+										</option>
 									</select>
 								</div>
 							</div>
@@ -526,7 +543,7 @@
 						</div>
 					</TabPanel>
 					<TabPanel header="DNI">
-						<div class="smartcenter form-row justify-content-md-center">
+						<!-- <div class="smartcenter form-row justify-content-md-center">
 							<div class="smartcenter form-group justify-content-md-center">
 								<div
 									class="mt-3 mb-1"
@@ -536,10 +553,10 @@
 							</div>
 						</div>
 
-						<!-- ----**** ---- -->
+				
 						<div class="text-center mb-3">
 							<button
-								class="btn btn-cancel btn-icon-split"
+								class="btn btn-main-1 btn-icon-split"
 								@click="Descargar"
 								v-if="
 									frmDatosCliente.modo == 'NO-EDITAR' &&
@@ -547,18 +564,18 @@
 								"
 							>
 								<span class="icon text-white">
-									<i class="fas fa-download"></i>
+									<i class="pi pi-download"></i>
 								</span>
 								<span class="text font-size-layout">Descargar</span>
 							</button>
 						</div>
-						<!-- ---*********---- -->
+					
 
 						<div class="form-row">
 							<div class="form-group col-md-6">
 								<label class="label-title" id="lblfotoDNI">FOTO DE DNI</label>
 								<input
-									class="btn btn-primary"
+									class="btn btn-main-2"
 									style="
 										background-color: var(--plomoOscuroEmpresarial);
 										border: none;
@@ -573,24 +590,62 @@
 									:disabled="frmDatosCliente.modo == 'NO-EDITAR'"
 								/>
 							</div></div
-					></TabPanel>
+					> -->
+						<div class="form-row">
+							<div
+								class="form-group foto-container col-md-6 col-12"
+								id="contenido"
+							>
+								<label
+									for="foto"
+									class="subir"
+									v-if="frmDatosCliente.imagen_dni == null"
+								>
+									<i
+										class="pi pi-plus-circle foto-icon"
+										style="font-size: 100px"
+									></i>
+								</label>
+								<input
+									id="foto"
+									type="file"
+									accept="image/*"
+									style="display: none"
+									@change="AgregarFoto"
+									v-if="frmDatosCliente.imagen_dni == null"
+								/>
+
+								<img class="d-block w-100" id="img" />
+								<button
+									class="btn btn-danger delete"
+									title="Quitar FOTO"
+									@click="QuitarFoto('foto')"
+									v-if="frmDatosCliente.imagen_dni != null"
+								>
+									<span class="icon text-white">
+										<i class="pi pi-trash"></i>
+									</span>
+								</button>
+							</div>
+						</div>
+					</TabPanel>
 				</TabView>
 				<hr />
 
 				<div class="text-right">
 					<div class="btn-group" role="group">
 						<button
-							class="btn btn-action btn-icon-split"
+							class="btn btn-main-1 btn-icon-split"
 							@click="Habilitar_editar"
 							v-if="frmDatosCliente.modo == 'NO-EDITAR'"
 						>
 							<span class="icon text-white">
-								<i class="fas fa-edit"></i>
+								<i class="pi pi-edit"></i>
 							</span>
 							<span class="text">EDITAR</span>
 						</button>
 						<button
-							class="btn btn-action btn-icon-split"
+							class="btn btn-main-1 btn-icon-split"
 							@click="GuardarCliente"
 							v-if="
 								frmDatosCliente.modo == 'EDITAR' ||
@@ -598,7 +653,7 @@
 							"
 						>
 							<span class="icon text-white">
-								<i class="fas fa-save"></i>
+								<i class="pi pi-save"></i>
 							</span>
 							<span class="text">GUARDAR</span>
 						</button>
@@ -614,26 +669,37 @@ import Dialog from "primevue/dialog";
 import TabView from "primevue/tabview";
 import TabPanel from "primevue/tabpanel";
 
+import FileUpload from "primevue/fileupload";
+import ImagePreview from "primevue/image";
+
 const api_url = import.meta.env.VITE_API_URL;
+const image_url = import.meta.env.VITE_IMAGE_URL;
 export default {
-	props: { agencias: Array },
+	props: { agencias: Array, datos_sesion: Object },
 	components: {
 		Dialog,
 		TabView,
 		TabPanel,
+
+		FileUpload,
+		ImagePreview,
 	},
 	data() {
 		return {
 			windowWidth: window.innerWidth,
+			image_url: image_url,
 			submited: false,
 			modal_visible: false,
 
-			lista_asesores: [],
+			asesores: [],
+			asesores_filtrados: [],
 			departamentos: [],
 			provincias: [],
 			provincias_filtradas: [],
 			distritos: [],
 			distritos_filtrados: [],
+
+			operadores: ["MOVISTAR", "CLARO", "BITEL", "ENTEL", "OTROS"],
 
 			frmDatosCliente: {
 				modo: null,
@@ -643,29 +709,31 @@ export default {
 				apellido_materno: null,
 				nombres: null,
 				fecha_nacimiento: null,
-				estado_civil: null,
-				genero: null,
+				estado_civil: 0,
+				genero: 0,
+				agencia_id: 0,
 				email: null,
 				expediente: null,
-				asesor_id: null,
-				agencia_id: null,
+				asesor_id: 0,
+				agencia_id: 0,
 				direccion: null,
-				departamento_id: null,
-				provincia_id: null,
-				distrito_id: null,
+				departamento_id: 0,
+				provincia_id: 0,
+				distrito_id: 0,
 				referencia_direccion: null,
 				telefonos: {
 					t1: null,
 					t2: null,
 					t3: null,
-					o1: null,
-					o2: null,
-					o3: null,
+					o1: 0,
+					o2: 0,
+					o3: 0,
 					n1: null,
 					n2: null,
 					n3: null,
 				},
 				imagen_dni: null,
+				nueva_imagen: false,
 				notas: null,
 			},
 		};
@@ -674,20 +742,125 @@ export default {
 		window.addEventListener("resize", () => {
 			this.windowWidth = window.innerWidth;
 		});
+
+		this.ListarRecursos();
 	},
 	methods: {
 		async ListarRecursos() {
 			let self = this;
 			return await axios
-				.get(api_url + "/cli/gestion/listar_recursos/")
+				.get(api_url + "/cli/gestion/listar_recursos")
 				.then(function (response) {
+					console.log(response.data);
 					self.departamentos = response.data.departamentos;
 					self.provincias = response.data.provincias;
 					self.distritos = response.data.distritos;
+					self.asesores = response.data.asesores;
 				});
+		},
+		Resetear() {
+			this.frmDatosCliente.id = 0;
+			this.frmDatosCliente.modo = "NUEVO";
+			this.frmDatosCliente.dni = null;
+			this.frmDatosCliente.apellido_paterno = null;
+			this.frmDatosCliente.apellido_materno = null;
+			this.frmDatosCliente.nombres = null;
+			this.frmDatosCliente.fecha_nacimiento = null;
+			this.frmDatosCliente.estado_civil = 0;
+			this.frmDatosCliente.genero = 0;
+			this.frmDatosCliente.agencia_id = this.datos_sesion.agencia_id;
+			this.frmDatosCliente.correo_electronico = null;
+			this.frmDatosCliente.expediente = null;
+			this.frmDatosCliente.asesor_id = 0;
+			this.frmDatosCliente.notas = null;
+			this.frmDatosCliente.direccion = null;
+			this.frmDatosCliente.distrito_id = 0;
+			this.frmDatosCliente.provincia_id = 0;
+			this.frmDatosCliente.departamento_id = 0;
+			this.frmDatosCliente.referencia_direccion = null;
+			this.frmDatosCliente.imagen_dni = null;
+			this.frmDatosCliente.nueva_imagen = false;
+			this.frmDatosCliente.observaciones = null;
+			this.frmDatosCliente.telefonos.t1 = null;
+			this.frmDatosCliente.telefonos.t2 = null;
+			this.frmDatosCliente.telefonos.t3 = null;
+			this.frmDatosCliente.telefonos.n1 = null;
+			this.frmDatosCliente.telefonos.n2 = null;
+			this.frmDatosCliente.telefonos.n3 = null;
+			this.frmDatosCliente.telefonos.o1 = 0;
+			this.frmDatosCliente.telefonos.o2 = 0;
+			this.frmDatosCliente.telefonos.o3 = 0;
 		},
 		Cerrar() {
 			this.modal_visible = false;
+		},
+		FiltrarProvincias(e) {
+			let departamento_id = e.target.value;
+
+			if (!departamento_id == 0) {
+				this.provincias_filtradas = this.provincias.filter(
+					(item) => item.departamento_id == departamento_id
+				);
+			} else {
+				this.provincias_filtradas = this.provincias;
+			}
+
+			this.frmDatosCliente.provincia_id = 0;
+			this.frmDatosCliente.distrito_id = 0;
+		},
+		FiltrarDistritos(e) {
+			let provincia_id = e.target.value;
+
+			if (!provincia_id == 0) {
+				this.distritos_filtrados = this.distritos.filter(
+					(item) => item.provincia_id == provincia_id
+				);
+			} else {
+				this.distritos_filtrados = this.distritos;
+			}
+
+			this.frmDatosCliente.distrito_id = 0;
+		},
+		FiltrarAsesores() {
+			let agencia_id = this.frmDatosCliente.agencia_id;
+
+			this.asesores_filtrados = this.asesores.filter(
+				(item) => item.agencia_id == agencia_id
+			);
+		},
+		AgregarFoto(e) {
+			let img_id = e.target.id;
+
+			// let previo = document.getElementById("contenido_" + indice + " img");
+			// console.log(previo);
+			// previo.parentNode.removeChild(previo);
+
+			// let previo = document.getElementById("contenido");
+			// if (previo) {
+			// 	let imgElement = previo.querySelector("img");
+			// 	console.log(imgElement);
+			// 	if (imgElement) {
+			// 		// imgElement.parentNode.removeChild(imgElement);
+			// 	}
+			// }
+
+			this.frmDatosCliente.imagen_dni = e.target.files[0];
+			this.frmDatosCliente.nueva_imagen = true;
+
+			let reader = new FileReader();
+			reader.readAsDataURL(e.target.files[0]); // leemos el archivo subido y se lo pasamos a nuestro fileReader
+			reader.onload = function () {
+				let preview = document.getElementById("contenido"),
+					image = document.createElement("img");
+
+				image.src = reader.result;
+				image.id = "img";
+				image.style.height = "100%";
+				image.style.width = "100%";
+				image.style.border = "1px solid #ffff";
+
+				preview.append(image);
+			};
 		},
 	},
 };
@@ -698,9 +871,55 @@ export default {
 	width: 50%;
 }
 
+.subir {
+	text-align: center;
+	vertical-align: middle;
+	width: 100% !important;
+	height: 100% !important;
+
+	background: #51515381;
+	color: rgba(255, 255, 255, 0.575);
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.subir:hover {
+	color: #fff;
+	background: #515153a8;
+}
+
+.delete {
+	position: fixed;
+
+	right: 17%;
+	z-index: 1000;
+}
+
+.foto-container {
+	width: 70%;
+	margin-left: 15%;
+	height: 300px;
+}
+
+.foto-icon {
+	margin-top: 15%;
+	margin-bottom: 15%;
+}
+
 @media (max-width: 992px) {
 	.mdlDatosCliente {
 		width: 80%;
+	}
+
+	.foto-container {
+		width: 100%;
+		margin-left: 0%;
+		height: 200px;
+	}
+
+	.delete {
+		position: fixed;
+		right: 20px;
 	}
 }
 

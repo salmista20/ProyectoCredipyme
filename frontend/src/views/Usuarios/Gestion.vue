@@ -315,7 +315,7 @@
 
 				<div class="text-right">
 					<div class="row">
-						<div class="align-left col-md-6">
+						<div class="align-left col-md-6 col-6">
 							<button
 								type="button"
 								class="btn btn-icon-split"
@@ -334,7 +334,7 @@
 								}}</span>
 							</button>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-6 col-6">
 							<button
 								type="button"
 								class="btn btn-main-1 btn-icon-split"
@@ -841,7 +841,7 @@ export default {
 	}
 
 	.mdlDatosUsuario {
-		width: 40%;
+		width: 60%;
 	}
 	.mdlCambiarClave {
 		width: 40%;
