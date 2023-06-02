@@ -145,7 +145,7 @@
 	</div>
 </template>
 
-<script>
+<script></script>
 import { useStorage } from "vue3-storage";
 import HeaderNav from "@/components/HeaderNav.vue";
 import HeaderClose from "@/components/HeaderClose.vue";
