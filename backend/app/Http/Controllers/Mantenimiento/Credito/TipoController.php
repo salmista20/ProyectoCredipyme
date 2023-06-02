@@ -20,6 +20,7 @@ class TipoController extends Controller
     public function verificar(Request $request)
     {
         $resultado = 'NO_EXISTE';
+        //Usar el mismo patron del requerimiento : frmDatosTipo
         $frmDatosSector = json_decode($request->frmDatosTipo);
 
         $modo = $frmDatosSector->modo;
