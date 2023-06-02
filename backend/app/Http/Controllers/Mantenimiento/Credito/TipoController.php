@@ -21,11 +21,11 @@ class TipoController extends Controller
     {
         $resultado = 'NO_EXISTE';
         //Usar el mismo patron del requerimiento : frmDatosTipo
-        $frmDatosSector = json_decode($request->frmDatosTipo);
+        $frmDatosTipo= json_decode($request->frmDatosTipo);
 
-        $modo = $frmDatosSector->modo;
-        $tipo = $frmDatosSector->tipo;
-        $id = $frmDatosSector->id;
+        $modo = $frmDatosTipo->modo;
+        $tipo = $frmDatosTipo->tipo;
+        $id = $frmDatosTipo->id;
 
         $tipo = Tipo::where('tipo', $tipo)
             ->get()->last();
